@@ -1,158 +1,120 @@
 "use client";
 
-import React, { useRef } from "react";
-import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import Link from "next/link";
 
 const AboutMe = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Scroll Parallax Logic
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
   });
 
-  const yImage = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
     <section
       ref={containerRef}
-      className="relative h-dvh md:h-screen w-full overflow-hidden flex flex-col items-center justify-end"
+      className="relative min-h-screen w-full overflow-hidden bg-black text-white"
     >
-      {/* Background Noise Texture for Awwwards feel */}
-      <div className="absolute inset-0 z-0 opacity-[0.05] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
-      {/* <Image
-        src="/bg-hero.png"
-        fill
-        priority
-        quality={85}
-        className="absolute inset-0 object-cover"
-        alt="Hero background"
-        sizes="100vw"
-      /> */}
+      {/* Ambient lighting */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/2 top-[18%] h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-white/[0.035] blur-[140px]" />
+        <div className="absolute right-[-10%] top-[30%] h-[300px] w-[300px] rounded-full bg-white/[0.025] blur-[120px]" />
+      </div>
 
+      {/* Subtle grain */}
+      <div className="pointer-events-none absolute inset-0 z-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.035]" />
+
+      {/* Main content */}
       <motion.div
         style={{
-          y: yImage,
+          y: heroY,
+          scale: heroScale,
+          opacity: heroOpacity,
         }}
-        className="relative z-20 flex items-end group"
+        className="relative z-20 mx-auto flex min-h-screen w-full max-w-[1500px] flex-col justify-between px-6 pb-8 pt-28 md:px-10 md:pb-10 md:pt-32"
       >
-        {/* Glow Effect */}
-        <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full group-hover:bg-primary/30 transition-all duration-500" />
+        {/* Top label */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.28em] text-white/45 md:text-xs">
+            <span className="h-1.5 w-1.5 rounded-full bg-white/70" />
+            Independent digital studio
+          </div>
 
-        {/* <div className="relative w-full h-full rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl bg-neutral-900/50 backdrop-blur-sm"> */}
-        {/* Swap for your own hero video/photo — see README for the full asset list */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/ichigo.png"
-          alt="Profile photo"
-          className="relative w-[125vw] md:w-[60vw] lg:w-[40vw] h-[75vh] md:h-[75dvh] object-contain object-bottom rounded-3xl"
-        />
-      </motion.div>
-
-      {/* Mobile: Vertical Side Label (editorial, clears navbar + video) */}
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
-        className="md:hidden absolute left-3 top-1/2 -translate-y-1/2 z-30 text-foreground"
-      >
-        <div className="flex items-center gap-4 [writing-mode:vertical-rl] rotate-180">
-          <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400">
-            Featured Work
-          </span>
-          <span className="w-1 h-1 bg-foreground rounded-full" />
-          <span className="text-sm font-bold">2D Animator</span>
-          <span className="w-1 h-1 bg-foreground rounded-full" />
-          <span className="text-sm font-bold">Creative Director</span>
-          <span className="w-1 h-1 bg-foreground rounded-full" />
-          <span className="text-sm font-bold">Video Editor</span>
-        </div>
-      </motion.div>
-
-      {/* Bottom Info Strip (desktop) */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
-        className="hidden md:flex absolute bottom-10 z-30 w-full px-10 flex-row justify-between items-center text-foreground"
-      >
-        <div className="flex flex-col gap-2">
-          <p className="text-xs font-mono uppercase text-gray-500 dark:text-gray-400">
-            Featured Work
-          </p>
-          <div className="flex items-center gap-4 text-sm font-bold">
-            <span className="hover:text-primary transition-colors cursor-pointer">
-              2D Animator
-            </span>
-            <span className="w-1 h-1 bg-foreground rounded-full" />
-            <span className="hover:text-primary transition-colors cursor-pointer">
-              Creative Director
-            </span>
-            <span className="w-1 h-1 bg-foreground rounded-full" />
-            <span className="hover:text-primary transition-colors cursor-pointer">
-              Video Editor
-            </span>
+          <div className="hidden text-[10px] uppercase tracking-[0.28em] text-white/30 sm:block md:text-xs">
+            India · Worldwide
           </div>
         </div>
 
-        <div className="hidden md:block">
-          <p className="text-xs font-mono text-right text-gray-500 dark:text-gray-400">
-            Social
-          </p>
-          <div className="flex items-center gap-4 text-sm font-bold">
-            <Link
-              href={"https://www.instagram.com/yourusername"}
-              target="_blank"
-            >
-              <span className="hover:text-primary transition-colors cursor-pointer">
-                Instagram
-              </span>
-            </Link>
-            <span className="w-1 h-1 bg-foreground rounded-full" />
-            <Link
-              href={"https://www.youtube.com/@yourusername"}
-              target="_blank"
-            >
-              <span className="hover:text-primary transition-colors cursor-pointer">
-                Youtube
-              </span>
-            </Link>
-          </div>
+        {/* Hero */}
+        <div className="flex flex-1 flex-col justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30, filter: "blur(12px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-6xl"
+          >
+            <p className="mb-5 text-xs uppercase tracking-[0.3em] text-white/35 md:text-sm">
+              VERITY
+            </p>
+
+            <h1 className="text-[16vw] font-medium leading-[0.82] tracking-[-0.075em] sm:text-[14vw] md:text-[11vw]">
+              Build
+              <br />
+              <span className="text-white/35">better.</span>
+            </h1>
+
+            <div className="mt-8 flex max-w-2xl flex-col gap-6 md:ml-[11vw] md:flex-row md:items-end md:justify-between">
+              <p className="max-w-md text-sm leading-7 text-white/50 md:text-base">
+                High-quality websites built with sharp design, smooth
+                interactions, and attention to every detail.
+              </p>
+
+              <div className="flex gap-3">
+                <Link
+                  href="#projects"
+                  className="rounded-full border border-white/15 bg-white/[0.06] px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] backdrop-blur-xl transition-all duration-300 hover:bg-white/[0.11]"
+                >
+                  View work
+                </Link>
+
+                <Link
+                  href="#contact"
+                  className="rounded-full border border-white/10 px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-white/55 transition-all duration-300 hover:border-white/20 hover:text-white"
+                >
+                  Start a project
+                </Link>
+              </div>
+            </div>
+          </motion.div>
         </div>
+
+        {/* Bottom info */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: 0.5,
+            duration: 0.8,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="flex items-end justify-between border-t border-white/[0.08] pt-5"
+        >
+          <div className="text-[10px] uppercase tracking-[0.24em] text-white/30 md:text-xs">
+            Design · Development · Digital
+          </div>
+
+          <div className="text-right text-[10px] uppercase tracking-[0.24em] text-white/25 md:text-xs">
+            Scroll to explore
+          </div>
+        </motion.div>
       </motion.div>
     </section>
-  );
-};
-
-// Helper Component for Stats
-const StatCard = ({
-  position,
-  label,
-  value,
-  delay,
-}: {
-  position: string;
-  label: string;
-  value: string;
-  delay: number;
-}) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8, y: 20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ delay, duration: 0.5, type: "spring" }}
-      className={`absolute ${position} z-30`}
-    >
-      <div className="backdrop-blur-md bg-white/5 border border-white/10 p-4 rounded-xl shadow-2xl hover:bg-white/10 transition-colors duration-300 w-32 md:w-40">
-        <h3 className="text-3xl font-bold  mb-1">{value}</h3>
-        <p className="text-xs text-gray-500 dark:text-gray-300 uppercase tracking-wider font-mono">
-          {label}
-        </p>
-      </div>
-    </motion.div>
   );
 };
 
