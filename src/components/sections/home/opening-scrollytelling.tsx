@@ -6,7 +6,7 @@ import AboutMe from "@/components/sections/about/about-me";
 import ShowReel from "@/components/sections/showreel";
 
 /**
- * Opening narrative: Hero → ShowReel → chapter title.
+ * Opening narrative: Hero → ShowReel → positioning statement.
  * Progress is scoped to this section so the animation doesn't react to the
  * rest of the page's scroll position.
  */
@@ -60,13 +60,19 @@ export default function OpeningScrollytelling() {
         >
           <div className="text-center">
             <p className="mb-5 font-mono text-[9px] tracking-[0.45em] text-white/35 uppercase md:text-[10px]">
-              Chapter 01 / The Story
+              Chapter 01 / What we make
             </p>
-            <h2 className="max-w-4xl text-4xl font-semibold tracking-[-0.04em] text-white sm:text-6xl lg:text-8xl">
-              Behind every piece of work
+            <h2 className="max-w-5xl text-4xl font-semibold tracking-[-0.05em] text-white sm:text-6xl lg:text-8xl">
+              We build websites
               <br />
-              <span className="font-normal italic text-white/35">there&apos;s a story.</span>
+              <span className="font-normal italic text-white/35">
+                that don&apos;t feel like websites.
+              </span>
             </h2>
+            <p className="mx-auto mt-7 max-w-xl text-sm leading-relaxed text-white/40 sm:text-base">
+              Designed to look sharp, built to move, and made to give people a
+              reason to remember you.
+            </p>
             <div className="mx-auto mt-8 h-px w-20 bg-white/20" />
           </div>
         </motion.div>
