@@ -1,13 +1,15 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
 
-const WINDOWS = Array.from({ length: 84 }, (_, index) => ({
-  index,
-  row: Math.floor(index / 12),
-  col: index % 12,
-}));
+const WINDOWS = Array.from({ length: 84 }, (_, index) => ({ index }));
 
 const warmLights = [
   "rgba(255, 236, 184, 0.95)",
@@ -16,13 +18,18 @@ const warmLights = [
   "rgba(255, 206, 112, 0.88)",
 ];
 
-function WindowLight({ index }: { index: number }) {
+function WindowLight({
+  index,
+  progress,
+}: {
+  index: number;
+  progress: MotionValue<number>;
+}) {
   const start = (index / WINDOWS.length) * 0.76;
   const end = start + 0.028;
-  const opacity = useTransform(progressValue, [start, end], [0, 1]);
-  const scale = useTransform(progressValue, [start, end], [0.78, 1]);
-  const glow = useTransform(progressValue, [start, end], [0, 1]);
-
+  const opacity = useTransform(progress, [start, end], [0, 1]);
+  const scale = useTransform(progress, [start, end], [0.78, 1]);
+  const glow = useTransform(progress, [start, end], [0, 1]);
   const light = warmLights[index % warmLights.length];
 
   return (
@@ -44,11 +51,6 @@ function WindowLight({ index }: { index: number }) {
   );
 }
 
-// Framer Motion motion values are shared by every window so the whole facade
-// reacts to one scroll progress source.
-import { motionValue } from "framer-motion";
-const progressValue = motionValue(0);
-
 export default function BuildingLightsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -60,8 +62,6 @@ export default function BuildingLightsSection() {
     damping: 24,
     mass: 0.4,
   });
-
-  progress.on("change", (value) => progressValue.set(value));
 
   const buildingY = useTransform(progress, [0, 1], [40, -40]);
   const titleOpacity = useTransform(progress, [0.73, 0.88], [0, 1]);
@@ -81,7 +81,7 @@ export default function BuildingLightsSection() {
 
           <div className="relative grid h-full grid-cols-6 gap-[clamp(4px,0.65vw,10px)] p-[clamp(10px,1.4vw,24px)] sm:grid-cols-8 lg:grid-cols-12">
             {WINDOWS.map((item) => (
-              <WindowLight key={item.index} index={item.index} />
+              <WindowLight key={item.index} index={item.index} progress={progress} />
             ))}
           </div>
 
