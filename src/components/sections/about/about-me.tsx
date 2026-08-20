@@ -65,7 +65,7 @@ const AboutMe = () => {
                 interactions, and attention to every detail.
               </p>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-start">
                 <DeepButton href="#projects">View work</DeepButton>
                 <DeepButton href="#contact" secondary>
                   Start a project
