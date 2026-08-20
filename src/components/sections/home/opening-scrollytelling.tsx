@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import AboutMe from "@/components/sections/about/about-me";
 import ShowReel from "@/components/sections/showreel";
@@ -10,7 +11,11 @@ import ShowReel from "@/components/sections/showreel";
  * navigation action.
  */
 export default function OpeningScrollytelling() {
-  const { scrollYProgress } = useScroll();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
   const progress = useSpring(scrollYProgress, {
     stiffness: 90,
     damping: 24,
@@ -24,9 +29,10 @@ export default function OpeningScrollytelling() {
   const reelY = useTransform(progress, [0.18, 0.42], [90, 0]);
   const reelScale = useTransform(progress, [0.18, 0.42], [0.94, 1]);
   const reelOpacity = useTransform(progress, [0.2, 0.38], [0, 1]);
+  const hintOpacity = useTransform(progress, [0.05, 0.28], [0, 0.7]);
 
   return (
-    <div className="relative h-[220vh] w-full">
+    <div ref={containerRef} className="relative h-[220vh] w-full">
       <div className="sticky top-0 h-dvh w-full overflow-hidden bg-black">
         <motion.div
           style={{ y: heroY, scale: heroScale, opacity: heroOpacity }}
@@ -45,7 +51,7 @@ export default function OpeningScrollytelling() {
         </motion.div>
 
         <motion.div
-          style={{ opacity: useTransform(progress, [0.05, 0.28], [0, 0.7]) }}
+          style={{ opacity: hintOpacity }}
           className="pointer-events-none absolute bottom-8 left-1/2 z-40 -translate-x-1/2 font-mono text-[9px] tracking-[0.4em] text-white/50 uppercase"
         >
           Scroll to enter
