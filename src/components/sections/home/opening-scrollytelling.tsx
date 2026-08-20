@@ -34,20 +34,15 @@ export default function OpeningScrollytelling() {
   const chapterOpacity = useTransform(progress, [0.7, 0.82, 0.98], [0, 1, 1]);
   const chapterY = useTransform(progress, [0.7, 0.98], [45, 0]);
   const chapterScale = useTransform(progress, [0.7, 0.98], [0.96, 1]);
-  const hintOpacity = useTransform(progress, [0.02, 0.14, 0.22], [0, 1, 0]);
-  const hintY = useTransform(progress, [0.02, 0.14], [18, 0]);
 
-  const advanceOpening = () => {
-    const section = sectionRef.current;
-    if (!section) return;
+  const advanceToStory = () => {
+    const aboutSection = document.getElementById("about");
+    if (!aboutSection) return;
 
-    const currentTop = section.getBoundingClientRect().top + window.scrollY;
-    const next = Math.min(
-      currentTop + window.innerHeight * 0.95,
-      document.documentElement.scrollHeight - window.innerHeight,
-    );
-
-    window.scrollTo({ top: next, behavior: "smooth" });
+    aboutSection.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   return (
@@ -90,19 +85,8 @@ export default function OpeningScrollytelling() {
             </p>
 
             <div className="mt-8 flex justify-center">
-              <GalaxyButton onClick={advanceOpening}>Continue</GalaxyButton>
+              <GalaxyButton onClick={advanceToStory}>Continue</GalaxyButton>
             </div>
-          </div>
-        </motion.div>
-
-        <motion.div
-          style={{ opacity: hintOpacity, y: hintY }}
-          className="pointer-events-none absolute left-5 top-1/2 z-40 -translate-y-1/2 sm:left-7 md:left-10"
-        >
-          <div className="pointer-events-auto">
-            <GalaxyButton onClick={advanceOpening} className="rotate-[-90deg] origin-center">
-              Scroll to enter
-            </GalaxyButton>
           </div>
         </motion.div>
       </div>
