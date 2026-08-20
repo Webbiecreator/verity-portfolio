@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import AboutMe from "@/components/sections/about/about-me";
 import CalBooking from "@/components/sections/home/cal-booking";
 import Testimonials from "@/components/sections/home/testimonials";
 import { TimelineDemo } from "@/components/sections/home/timeline-demo";
 import Preloader from "@/components/common/preloader";
-import ShowReel from "@/components/sections/showreel";
+import OpeningScrollytelling from "@/components/sections/home/opening-scrollytelling";
 import CollabSec from "@/components/sections/home/collab-section";
 import AboutScrollSection from "@/components/sections/about/about-scroll-section";
 
@@ -29,35 +28,22 @@ export default function Home() {
         {isLoading && <Preloader onComplete={handleLoaded} />}
       </AnimatePresence>
 
-      {/*About Me is Hero Section */}
-      <section id="hero" className="w-full scroll-mt-24">
-        <AboutMe />
-      </section>
-      <ShowReel />
+      {/* Opening narrative: Hero → ShowReel is now controlled by scroll. */}
+      <OpeningScrollytelling />
 
       {/* About Scroll Section */}
       <section id="about" className="">
         <AboutScrollSection />
       </section>
 
-      {/* <div className="w-full scroll-mt-24" id="services">
-        <LogoCloud />
-      </div> */}
-
-      {/* Services Section */}
-      {/* <section id="services" className="w-full scroll-mt-24">
-        <ServicesMenu />
-      </section> */}
-
       {/* Timeline & Testimonials */}
-      {/* Projects Section */}
       <section id="projects" className="w-full scroll-mt-24">
-        {/* <ViralShowcase /> */}
         <TimelineDemo />
       </section>
       <CollabSec />
 
       <Testimonials />
+
       {/* Contact Section */}
       <section id="contact" className="w-full scroll-mt-24">
         <CalBooking />
