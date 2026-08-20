@@ -34,13 +34,20 @@ export default function OpeningScrollytelling() {
   const chapterOpacity = useTransform(progress, [0.7, 0.82, 0.98], [0, 1, 1]);
   const chapterY = useTransform(progress, [0.7, 0.98], [45, 0]);
   const chapterScale = useTransform(progress, [0.7, 0.98], [0.96, 1]);
-  const hintOpacity = useTransform(progress, [0.05, 0.28], [0, 0.7]);
+  const hintOpacity = useTransform(progress, [0.02, 0.14, 0.22], [0, 1, 0]);
+  const hintY = useTransform(progress, [0.02, 0.14], [18, 0]);
 
   const advanceOpening = () => {
-    window.scrollBy({
-      top: Math.max(window.innerHeight * 0.9, 560),
-      behavior: "smooth",
-    });
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const currentTop = section.getBoundingClientRect().top + window.scrollY;
+    const next = Math.min(
+      currentTop + window.innerHeight * 0.95,
+      document.documentElement.scrollHeight - window.innerHeight,
+    );
+
+    window.scrollTo({ top: next, behavior: "smooth" });
   };
 
   return (
@@ -89,10 +96,14 @@ export default function OpeningScrollytelling() {
         </motion.div>
 
         <motion.div
-          style={{ opacity: hintOpacity }}
-          className="pointer-events-none absolute bottom-8 left-1/2 z-40 -translate-x-1/2"
+          style={{ opacity: hintOpacity, y: hintY }}
+          className="pointer-events-none absolute left-5 top-1/2 z-40 -translate-y-1/2 sm:left-7 md:left-10"
         >
-          <GalaxyButton onClick={advanceOpening}>Scroll to enter</GalaxyButton>
+          <div className="pointer-events-auto">
+            <GalaxyButton onClick={advanceOpening} className="rotate-[-90deg] origin-center">
+              Scroll to enter
+            </GalaxyButton>
+          </div>
         </motion.div>
       </div>
     </div>
