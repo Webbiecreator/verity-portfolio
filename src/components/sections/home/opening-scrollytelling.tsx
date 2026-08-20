@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import AboutMe from "@/components/sections/about/about-me";
 import ShowReel from "@/components/sections/showreel";
+import GalaxyButton from "@/components/ui/galaxy-button";
 
 /**
  * Opening narrative: Hero → ShowReel → positioning statement.
@@ -35,6 +36,13 @@ export default function OpeningScrollytelling() {
   const chapterScale = useTransform(progress, [0.7, 0.98], [0.96, 1]);
   const hintOpacity = useTransform(progress, [0.05, 0.28], [0, 0.7]);
 
+  const advanceOpening = () => {
+    window.scrollBy({
+      top: Math.max(window.innerHeight * 0.9, 560),
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div ref={sectionRef} className="relative h-[260vh] w-full bg-black">
       <div className="sticky top-0 h-dvh w-full overflow-hidden bg-black">
@@ -58,7 +66,7 @@ export default function OpeningScrollytelling() {
           style={{ opacity: chapterOpacity, y: chapterY, scale: chapterScale }}
           className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6"
         >
-          <div className="text-center">
+          <div className="pointer-events-auto text-center">
             <p className="mb-5 font-mono text-[9px] tracking-[0.45em] text-white/35 uppercase md:text-[10px]">
               Chapter 01 / What we make
             </p>
@@ -73,15 +81,18 @@ export default function OpeningScrollytelling() {
               Designed to look sharp, built to move, and made to give people a
               reason to remember you.
             </p>
-            <div className="mx-auto mt-8 h-px w-20 bg-white/20" />
+
+            <div className="mt-8 flex justify-center">
+              <GalaxyButton onClick={advanceOpening}>Continue</GalaxyButton>
+            </div>
           </div>
         </motion.div>
 
         <motion.div
           style={{ opacity: hintOpacity }}
-          className="pointer-events-none absolute bottom-8 left-1/2 z-40 -translate-x-1/2 font-mono text-[9px] tracking-[0.4em] text-white/50 uppercase"
+          className="pointer-events-none absolute bottom-8 left-1/2 z-40 -translate-x-1/2"
         >
-          Scroll to enter
+          <GalaxyButton onClick={advanceOpening}>Scroll to enter</GalaxyButton>
         </motion.div>
       </div>
     </div>
