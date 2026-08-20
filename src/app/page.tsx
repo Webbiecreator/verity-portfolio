@@ -8,12 +8,9 @@ import { TimelineDemo } from "@/components/sections/home/timeline-demo";
 import Preloader from "@/components/common/preloader";
 import OpeningScrollytelling from "@/components/sections/home/opening-scrollytelling";
 import CollabSec from "@/components/sections/home/collab-section";
-import AboutScrollSection from "@/components/sections/about/about-scroll-section";
+import BuildingLightsSection from "@/components/sections/about/building-lights-section";
 
 export default function Home() {
-  // The Preloader owns the (60fps) load-progress state internally so those
-  // updates never re-render this heavy page tree. It just tells us when it's
-  // done, and we drop it.
   const [isLoading, setIsLoading] = useState(true);
 
   const handleLoaded = () => {
@@ -28,15 +25,12 @@ export default function Home() {
         {isLoading && <Preloader onComplete={handleLoaded} />}
       </AnimatePresence>
 
-      {/* Opening narrative: Hero → ShowReel is now controlled by scroll. */}
       <OpeningScrollytelling />
 
-      {/* About Scroll Section */}
-      <section id="about" className="">
-        <AboutScrollSection />
+      <section id="about" className="w-full">
+        <BuildingLightsSection />
       </section>
 
-      {/* Timeline & Testimonials */}
       <section id="projects" className="w-full scroll-mt-24">
         <TimelineDemo />
       </section>
@@ -44,7 +38,6 @@ export default function Home() {
 
       <Testimonials />
 
-      {/* Contact Section */}
       <section id="contact" className="w-full scroll-mt-24">
         <CalBooking />
       </section>
