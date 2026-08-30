@@ -19,11 +19,22 @@ const AboutMe = () => {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen w-full overflow-hidden bg-black text-white"
+      className="relative min-h-screen w-full overflow-hidden bg-[#050506] text-white"
     >
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-[18%] h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-white/[0.035] blur-[140px]" />
-        <div className="absolute right-[-10%] top-[30%] h-[300px] w-[300px] rounded-full bg-white/[0.025] blur-[120px]" />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="hero-grid absolute inset-0 opacity-40" />
+        <motion.div
+          animate={{ x: [0, 100, -40, 0], y: [0, -35, 45, 0], scale: [1, 1.15, 0.95, 1] }}
+          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute left-[8%] top-[12%] h-[36rem] w-[36rem] rounded-full bg-violet-400/[0.055] blur-[150px]"
+        />
+        <motion.div
+          animate={{ x: [0, -80, 50, 0], y: [0, 60, -25, 0], scale: [1, 0.9, 1.12, 1] }}
+          transition={{ duration: 19, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute right-[-10%] top-[28%] h-[32rem] w-[32rem] rounded-full bg-sky-300/[0.045] blur-[150px]"
+        />
+        <div className="absolute left-1/2 top-1/2 h-[42rem] w-[42rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.035] bg-white/[0.01] blur-3xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#050506_72%)]" />
       </div>
 
       <div className="pointer-events-none absolute inset-0 z-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.035]" />
@@ -34,7 +45,11 @@ const AboutMe = () => {
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.28em] text-white/45 md:text-xs">
-            <span className="h-1.5 w-1.5 rounded-full bg-white/70" />
+            <motion.span
+              animate={{ opacity: [0.4, 1, 0.4], scale: [0.9, 1.25, 0.9] }}
+              transition={{ duration: 2.5, repeat: Infinity }}
+              className="h-1.5 w-1.5 rounded-full bg-violet-200 shadow-[0_0_18px_rgba(196,181,253,0.8)]"
+            />
             Independent digital studio
           </div>
           <div className="hidden text-[10px] uppercase tracking-[0.28em] text-white/30 sm:block md:text-xs">
@@ -49,17 +64,24 @@ const AboutMe = () => {
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-6xl"
           >
-            <p className="mb-5 text-xs uppercase tracking-[0.3em] text-white/35 md:text-sm">
+            <motion.p
+              initial={{ opacity: 0, letterSpacing: "0.8em" }}
+              animate={{ opacity: 1, letterSpacing: "0.3em" }}
+              transition={{ delay: 0.25, duration: 1.2 }}
+              className="font-ledlight mb-5 text-sm uppercase text-violet-100/60 md:text-base"
+            >
               VERITY
-            </p>
+            </motion.p>
 
-            <h1 className="text-[16vw] font-medium leading-[0.82] tracking-[-0.075em] sm:text-[14vw] md:text-[11vw]">
-              Build
+            <h1 className="font-roadster text-[17vw] font-medium leading-[0.8] tracking-[-0.065em] sm:text-[14vw] md:text-[11vw]">
+              <span className="inline-block">Build</span>
               <br />
-              <span className="text-white/35">better.</span>
+              <span className="bg-gradient-to-r from-white via-white to-white/30 bg-clip-text text-transparent">
+                better.
+              </span>
             </h1>
 
-            <div className="mt-8 flex max-w-2xl flex-col gap-6 md:ml-[11vw] md:flex-row md:items-end md:justify-between">
+            <div className="mt-9 flex max-w-3xl flex-col gap-7 md:ml-[11vw] md:flex-row md:items-end md:justify-between">
               <p className="max-w-md text-sm leading-7 text-white/50 md:text-base">
                 High-quality websites built with sharp design, smooth
                 interactions, and attention to every detail.
