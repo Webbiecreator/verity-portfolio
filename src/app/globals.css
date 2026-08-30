@@ -113,6 +113,19 @@
   body { @apply bg-background text-foreground; font-family: var(--font-poppins), sans-serif; }
 }
 
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at center, black, transparent 75%);
+  animation: heroGridDrift 18s linear infinite;
+}
+@keyframes heroGridDrift {
+  from { background-position: 0 0; }
+  to { background-position: 72px 72px; }
+}
+
 .font-roadster { font-family: "Roadster", sans-serif; }
 .font-ledlight { font-family: "LEDlight", sans-serif; }
 .font-rc { font-family: "RC", sans-serif; }
