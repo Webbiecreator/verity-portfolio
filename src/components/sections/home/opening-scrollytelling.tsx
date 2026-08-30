@@ -8,8 +8,7 @@ import GalaxyButton from "@/components/ui/galaxy-button";
 
 /**
  * Opening narrative: Hero → ShowReel → positioning statement.
- * Progress is scoped to this section so the animation doesn't react to the
- * rest of the page's scroll position.
+ * The three chapters now each occupy roughly one viewport of scroll distance.
  */
 export default function OpeningScrollytelling() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -23,17 +22,17 @@ export default function OpeningScrollytelling() {
     mass: 0.35,
   });
 
-  const heroY = useTransform(progress, [0, 0.16, 0.34], [0, -24, -120]);
-  const heroScale = useTransform(progress, [0, 0.34], [1, 0.92]);
-  const heroOpacity = useTransform(progress, [0, 0.28, 0.4], [1, 1, 0]);
+  const heroY = useTransform(progress, [0, 0.17, 0.31], [0, -24, -120]);
+  const heroScale = useTransform(progress, [0, 0.31], [1, 0.92]);
+  const heroOpacity = useTransform(progress, [0, 0.27, 0.36], [1, 1, 0]);
 
-  const reelY = useTransform(progress, [0.18, 0.42], [90, 0]);
-  const reelScale = useTransform(progress, [0.18, 0.42, 0.76], [0.94, 1, 0.97]);
-  const reelOpacity = useTransform(progress, [0.2, 0.38, 0.8], [0, 1, 0]);
+  const reelY = useTransform(progress, [0.30, 0.38, 0.67], [90, 30, 0]);
+  const reelScale = useTransform(progress, [0.30, 0.38, 0.67], [0.94, 1, 1]);
+  const reelOpacity = useTransform(progress, [0.31, 0.36, 0.69], [0, 1, 0]);
 
-  const chapterOpacity = useTransform(progress, [0.7, 0.82, 0.98], [0, 1, 1]);
-  const chapterY = useTransform(progress, [0.7, 0.98], [45, 0]);
-  const chapterScale = useTransform(progress, [0.7, 0.98], [0.96, 1]);
+  const chapterOpacity = useTransform(progress, [0.64, 0.72, 0.99], [0, 1, 1]);
+  const chapterY = useTransform(progress, [0.64, 0.99], [45, 0]);
+  const chapterScale = useTransform(progress, [0.64, 0.99], [0.96, 1]);
 
   const advanceToStory = () => {
     const aboutSection = document.getElementById("about");
@@ -46,7 +45,7 @@ export default function OpeningScrollytelling() {
   };
 
   return (
-    <div ref={sectionRef} className="relative h-[260vh] w-full bg-black">
+    <div ref={sectionRef} className="relative h-[300vh] w-full bg-black">
       <div className="sticky top-0 h-dvh w-full overflow-hidden bg-black">
         <motion.div
           style={{ y: heroY, scale: heroScale, opacity: heroOpacity }}
