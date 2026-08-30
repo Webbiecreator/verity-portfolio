@@ -13,11 +13,6 @@ import { Grain } from "./grain";
 import { ReelCard } from "./reel-card";
 import { VideoModal } from "./video-modal";
 
-/**
- * Persistent Vimeo backdrop for a single slide.
- * When a real Vimeo ID is not connected yet, the local project mockup remains
- * the only backdrop so the prototype never renders a broken iframe.
- */
 function VimeoBackdrop({
   item,
   isActive,
@@ -44,7 +39,6 @@ function VimeoBackdrop({
         className="absolute inset-0 h-full w-full object-cover"
         draggable={false}
       />
-
       {hasVideo && mountVideo && (
         <iframe
           src={`https://player.vimeo.com/video/${item.vimeoId}?background=1&autoplay=1&loop=1&muted=1&dnt=1`}
@@ -62,7 +56,6 @@ function VimeoBackdrop({
           title={item.title}
         />
       )}
-
       <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/10 to-black/50" />
       <div className="absolute inset-0 bg-linear-to-r from-black/50 via-transparent to-black/20" />
     </div>
@@ -75,7 +68,6 @@ export default function ShowReel() {
   const [locked, setLocked] = useState(false);
   const [modal, setModal] = useState<showReelI | null>(null);
   const [cursorVisible, setCursorVisible] = useState(false);
-  const [lastNav, setLastNav] = useState(0);
   const [isTouch, setIsTouch] = useState(false);
 
   const lockTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -100,15 +92,6 @@ export default function ShowReel() {
   const springX = useSpring(cursorX, { stiffness: 500, damping: 40 });
   const springY = useSpring(cursorY, { stiffness: 500, damping: 40 });
 
-  useEffect(() => {
-    if (modal) return;
-    const id = setInterval(() => {
-      setDir(1);
-      setActive((prev) => (prev + 1) % total);
-    }, 10000);
-    return () => clearInterval(id);
-  }, [modal, total, lastNav]);
-
   const navigate = useCallback(
     (step: number) => {
       if (locked) return;
@@ -116,12 +99,33 @@ export default function ShowReel() {
       if (next < 0 || next >= total) return;
       setDir(step);
       setActive(next);
-      setLastNav(Date.now());
       setLocked(true);
       if (lockTimer.current) clearTimeout(lockTimer.current);
       lockTimer.current = setTimeout(() => setLocked(false), 700);
     },
     [active, locked, total],
+  );
+
+  const handleWheel = useCallback(
+    (event: React.WheelEvent<HTMLElement>) => {
+      if (isTouch || modal) return;
+      const delta = event.deltaY;
+      if (Math.abs(delta) < 4) return;
+
+      const step = delta > 0 ? 1 : -1;
+      const atBoundary =
+        (step > 0 && active === total - 1) ||
+        (step < 0 && active === 0);
+
+      // While the reel has another project to show, consume the wheel event.
+      // This prevents a fast/large wheel movement from skipping the reel or
+      // jumping ahead to the chapter below it.
+      if (!atBoundary || locked) {
+        event.preventDefault();
+        if (!locked) navigate(step);
+      }
+    },
+    [active, isTouch, locked, modal, navigate, total],
   );
 
   const handleDragStart = useCallback(
@@ -167,6 +171,7 @@ export default function ShowReel() {
         className={`relative h-dvh w-full select-none overflow-hidden bg-black md:h-screen ${modal || isTouch ? "cursor-auto" : "cursor-none"}`}
         style={{ touchAction: "pan-y" }}
         aria-label="Show Reel"
+        onWheel={handleWheel}
         onPointerDown={handleDragStart}
         onPointerUp={handleDragEnd}
         onMouseMove={(e) => {
@@ -243,10 +248,12 @@ export default function ShowReel() {
                 key={i}
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (i !== active) {
+                  if (i !== active && !locked) {
                     setDir(i > active ? 1 : -1);
                     setActive(i);
-                    setLastNav(Date.now());
+                    setLocked(true);
+                    if (lockTimer.current) clearTimeout(lockTimer.current);
+                    lockTimer.current = setTimeout(() => setLocked(false), 700);
                   }
                 }}
                 animate={{ width: i === active ? 20 : 6, opacity: i === active ? 1 : 0.35 }}
