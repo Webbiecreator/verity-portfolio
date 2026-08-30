@@ -15,6 +15,7 @@ const AboutMe = () => {
   const heroY = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const gridY = useTransform(scrollYProgress, [0, 1], [0, 120]);
 
   return (
     <section
@@ -22,7 +23,11 @@ const AboutMe = () => {
       className="relative min-h-screen w-full overflow-hidden bg-[#050506] text-white"
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="hero-grid absolute inset-0 opacity-40" />
+        <motion.div
+          style={{ y: gridY }}
+          className="hero-grid absolute -inset-x-1/2 bottom-[-28%] h-[82%] origin-bottom [transform:perspective(900px)_rotateX(58deg)_scale(1.45)] opacity-45"
+        />
+        <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-[#050506] via-[#050506]/40 to-transparent" />
         <motion.div
           animate={{ x: [0, 100, -40, 0], y: [0, -35, 45, 0], scale: [1, 1.15, 0.95, 1] }}
           transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
