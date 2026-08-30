@@ -1,6 +1,27 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@font-face {
+  font-family: "Roadster";
+  src: url("/fonts/ROADSTER.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "LEDlight";
+  src: url("/fonts/LEDLIGHT.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "RC";
+  src: url("/fonts/R&C-Demo.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Magazine";
+  src: url("/fonts/MagazineLetterByBrntlbrnl-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -10,6 +31,10 @@
   --font-mono: var(--font-geist-mono);
   --font-poppins: var(--font-poppins);
   --font-accent: var(--font-accent);
+  --font-roadster: "Roadster", sans-serif;
+  --font-ledlight: "LEDlight", sans-serif;
+  --font-rc: "RC", sans-serif;
+  --font-magazine: "Magazine", serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -43,70 +68,18 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --animate-marquee: marquee var(--duration) infinite linear;
-  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(calc(-100% - var(--gap)));
-    }
-  }
-  @keyframes marquee-vertical {
-    from {
-      transform: translateY(0);
-    }
-    to {
-      transform: translateY(calc(-100% - var(--gap)));
-    }
-  }
 }
 
 :root {
   --radius: 0.625rem;
-  --background: #eddad4;
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(59.71% 0.23 23.86);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
+  --background: #050506;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(59.71% 0.23 23.86);
-  --primary-foreground: oklch(0.205 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.145 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
@@ -132,31 +105,19 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+.dark { --background: #050506; --foreground: oklch(0.985 0 0); }
+
 @layer base {
-  * {
-    font-family: var(--font-poppins);
-    @apply border-border outline-ring/50;
-  }
-  html {
-    scroll-behavior: smooth;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+  * { @apply border-border outline-ring/50; }
+  html { scroll-behavior: smooth; }
+  body { @apply bg-background text-foreground; font-family: var(--font-poppins), sans-serif; }
 }
 
-::selection {
-  background-color: var(--primary);
-  color: var(--primary-foreground);
-}
-/* Prevent iframe flickering with custom cursor */
-iframe {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
+.font-roadster { font-family: "Roadster", sans-serif; }
+.font-ledlight { font-family: "LEDlight", sans-serif; }
+.font-rc { font-family: "RC", sans-serif; }
+.font-magazine { font-family: "Magazine", serif; }
 
-/* Optional: Hide default cursor over iframes if needed */
-.cursor-hidden iframe {
-  cursor: none;
-}
+::selection { background-color: var(--primary); color: var(--primary-foreground); }
+iframe { transform: translateZ(0); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.cursor-hidden iframe { cursor: none; }
