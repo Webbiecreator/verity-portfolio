@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Dither from "@/components/ui/dither";
 
 const projects = [
   {
@@ -59,8 +60,21 @@ function ProjectVisual({ kind }: { kind: string }) {
 
 export function TimelineDemo() {
   return (
-    <section className="relative w-full bg-black px-5 py-28 text-white sm:px-8 lg:px-12 lg:py-40">
-      <div className="mx-auto max-w-[1400px]">
+    <section className="relative w-full overflow-hidden bg-black px-5 py-28 text-white sm:px-8 lg:px-12 lg:py-40">
+      <div className="pointer-events-none absolute inset-0 opacity-35">
+        <Dither
+          waveSpeed={0.035}
+          waveFrequency={3}
+          waveAmplitude={0.3}
+          waveColor={[0.5, 0.5, 0.5]}
+          backgroundColor={[0, 0, 0]}
+          colorNum={4}
+          pixelSize={2}
+          enableMouseInteraction={false}
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-[1400px]">
         <div className="mb-24 flex flex-col gap-8 lg:mb-36 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="mb-5 font-mono text-[9px] tracking-[0.45em] text-white/35 uppercase">
@@ -78,7 +92,7 @@ export function TimelineDemo() {
         </div>
 
         <div className="space-y-32 lg:space-y-48">
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <motion.article
               key={project.number}
               initial={{ opacity: 0, y: 45 }}
