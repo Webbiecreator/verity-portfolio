@@ -33,7 +33,9 @@ export default function ShowReel() {
   const lockTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dragStart = useRef<{ x: number; y: number } | null>(null);
   const suppressClick = useRef(false);
+  const wheelAccumulator = useRef(0);
   const total = showRealData.length;
+  const WHEEL_DISTANCE = 180;
 
   useEffect(() => {
     setIsTouch(window.matchMedia("(pointer: coarse)").matches);
@@ -56,28 +58,44 @@ export default function ShowReel() {
   const springY = useSpring(cursorY, { stiffness: 500, damping: 40 });
 
   const navigate = useCallback((step: number) => {
-    if (locked || modal) return;
+    if (locked || modal) return false;
     const next = active + step;
-    if (next < 0 || next >= total) return;
+    if (next < 0 || next >= total) return false;
     setDir(step);
     setActive(next);
     setLocked(true);
+    wheelAccumulator.current = 0;
     if (lockTimer.current) clearTimeout(lockTimer.current);
-    lockTimer.current = setTimeout(() => setLocked(false), 850);
+    lockTimer.current = setTimeout(() => setLocked(false), 650);
+    return true;
   }, [active, locked, modal, total]);
 
   const handleWheel = useCallback((event: React.WheelEvent<HTMLElement>) => {
     if (isTouch || modal) return;
-    const delta = event.deltaY;
-    if (Math.abs(delta) < 10) return;
+    const delta = Math.max(-120, Math.min(120, event.deltaY));
+    if (Math.abs(delta) < 2) return;
+
     const step = delta > 0 ? 1 : -1;
     const atFirst = active === 0;
     const atLast = active === total - 1;
     const movingInsideReel = (step > 0 && !atLast) || (step < 0 && !atFirst);
+
+    // Keep the reel pinned while there are projects left. Accumulate wheel
+    // distance so trackpads and mouse wheels both require a deliberate scroll
+    // before changing projects instead of jumping through several at once.
     if (movingInsideReel || locked) {
       event.preventDefault();
-      if (!locked) navigate(step);
+      if (locked) return;
+
+      wheelAccumulator.current += delta;
+      if (Math.abs(wheelAccumulator.current) >= WHEEL_DISTANCE) {
+        navigate(step);
+      }
+      return;
     }
+
+    // At either end, allow the page to continue naturally in that direction.
+    wheelAccumulator.current = 0;
   }, [active, isTouch, locked, modal, navigate, total]);
 
   const handleDragStart = useCallback((e: React.PointerEvent) => {
@@ -139,8 +157,8 @@ export default function ShowReel() {
             <ReelCard key={active} item={showRealData[active]} index={active} total={total} direction={dir} onOpen={() => { if (!suppressClick.current) setModal(showRealData[active]); }} />
           </AnimatePresence>
 
-          <div className="absolute bottom-8 left-1/2 z-40 w-[min(420px,70vw)] -translate-x-1/2">
-            <div className="mb-3 flex items-center justify-between font-mono text-[9px] tracking-[0.28em] text-white/35 uppercase">
+          <div className="absolute bottom-8 left-1/2 z-40 w-[min(260px,55vw)] -translate-x-1/2">
+            <div className="mb-2 flex items-center justify-between font-mono text-[8px] tracking-[0.28em] text-white/35 uppercase">
               <span>Project {String(active + 1).padStart(2, "0")}</span>
               <span>{String(total).padStart(2, "0")}</span>
             </div>
@@ -153,7 +171,7 @@ export default function ShowReel() {
             <motion.button onClick={(e) => { e.stopPropagation(); navigate(-1); }} disabled={active === 0} whileHover={active === 0 ? {} : { scale: 1.1 }} whileTap={active === 0 ? {} : { scale: 0.92 }} className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/30 text-white backdrop-blur-md transition-colors hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-25"><ChevronLeft size={18} /></motion.button>
             <div className="flex items-center gap-1.5">
               {Array.from({ length: total }).map((_, i) => (
-                <motion.button key={i} onClick={(e) => { e.stopPropagation(); if (i !== active && !locked) { setDir(i > active ? 1 : -1); setActive(i); setLocked(true); if (lockTimer.current) clearTimeout(lockTimer.current); lockTimer.current = setTimeout(() => setLocked(false), 850); } }} animate={{ width: i === active ? 20 : 6, opacity: i === active ? 1 : 0.35 }} transition={{ type: "spring", stiffness: 300, damping: 30 }} className="h-1.5 rounded-full bg-white" aria-label={`Go to project ${i + 1}`} />
+                <motion.button key={i} onClick={(e) => { e.stopPropagation(); if (i !== active && !locked) { setDir(i > active ? 1 : -1); setActive(i); setLocked(true); wheelAccumulator.current = 0; if (lockTimer.current) clearTimeout(lockTimer.current); lockTimer.current = setTimeout(() => setLocked(false), 650); } }} animate={{ width: i === active ? 20 : 6, opacity: i === active ? 1 : 0.35 }} transition={{ type: "spring", stiffness: 300, damping: 30 }} className="h-1.5 rounded-full bg-white" aria-label={`Go to project ${i + 1}`} />
               ))}
             </div>
             <motion.button onClick={(e) => { e.stopPropagation(); navigate(1); }} disabled={active === total - 1} whileHover={active === total - 1 ? {} : { scale: 1.1 }} whileTap={active === total - 1 ? {} : { scale: 0.92 }} className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/30 text-white backdrop-blur-md transition-colors hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-25"><ChevronRight size={18} /></motion.button>
