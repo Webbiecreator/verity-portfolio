@@ -66,36 +66,30 @@ export default function ShowReel() {
     setLocked(true);
     wheelAccumulator.current = 0;
     if (lockTimer.current) clearTimeout(lockTimer.current);
-    lockTimer.current = setTimeout(() => setLocked(false), 650);
+    lockTimer.current = setTimeout(() => setLocked(false), 900);
     return true;
   }, [active, locked, modal, total]);
 
   const handleWheel = useCallback((event: React.WheelEvent<HTMLElement>) => {
     if (isTouch || modal) return;
-    const delta = Math.max(-120, Math.min(120, event.deltaY));
-    if (Math.abs(delta) < 2) return;
+    const delta = Math.max(-100, Math.min(100, event.deltaY));
+    if (Math.abs(delta) < 1) return;
 
     const step = delta > 0 ? 1 : -1;
     const atFirst = active === 0;
     const atLast = active === total - 1;
     const movingInsideReel = (step > 0 && !atLast) || (step < 0 && !atFirst);
 
-    // Keep the reel pinned while there are projects left. Accumulate wheel
-    // distance so trackpads and mouse wheels both require a deliberate scroll
-    // before changing projects instead of jumping through several at once.
-    if (movingInsideReel || locked) {
-      event.preventDefault();
-      if (locked) return;
-
-      wheelAccumulator.current += delta;
-      if (Math.abs(wheelAccumulator.current) >= WHEEL_DISTANCE) {
-        navigate(step);
-      }
+    if (!movingInsideReel && !locked) {
+      wheelAccumulator.current = 0;
       return;
     }
 
-    // At either end, allow the page to continue naturally in that direction.
-    wheelAccumulator.current = 0;
+    event.preventDefault();
+    if (locked) return;
+
+    wheelAccumulator.current += delta;
+    if (Math.abs(wheelAccumulator.current) >= WHEEL_DISTANCE) navigate(step);
   }, [active, isTouch, locked, modal, navigate, total]);
 
   const handleDragStart = useCallback((e: React.PointerEvent) => {
@@ -125,7 +119,7 @@ export default function ShowReel() {
     return () => window.removeEventListener("keydown", onKey);
   }, [navigate]);
 
-  const progress = total <= 1 ? 100 : (active / (total - 1)) * 100;
+  const progress = total <= 1 ? 100 : ((active + 1) / total) * 100;
 
   return (
     <>
@@ -171,7 +165,7 @@ export default function ShowReel() {
             <motion.button onClick={(e) => { e.stopPropagation(); navigate(-1); }} disabled={active === 0} whileHover={active === 0 ? {} : { scale: 1.1 }} whileTap={active === 0 ? {} : { scale: 0.92 }} className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/30 text-white backdrop-blur-md transition-colors hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-25"><ChevronLeft size={18} /></motion.button>
             <div className="flex items-center gap-1.5">
               {Array.from({ length: total }).map((_, i) => (
-                <motion.button key={i} onClick={(e) => { e.stopPropagation(); if (i !== active && !locked) { setDir(i > active ? 1 : -1); setActive(i); setLocked(true); wheelAccumulator.current = 0; if (lockTimer.current) clearTimeout(lockTimer.current); lockTimer.current = setTimeout(() => setLocked(false), 650); } }} animate={{ width: i === active ? 20 : 6, opacity: i === active ? 1 : 0.35 }} transition={{ type: "spring", stiffness: 300, damping: 30 }} className="h-1.5 rounded-full bg-white" aria-label={`Go to project ${i + 1}`} />
+                <motion.button key={i} onClick={(e) => { e.stopPropagation(); if (i !== active && !locked) { setDir(i > active ? 1 : -1); setActive(i); setLocked(true); wheelAccumulator.current = 0; if (lockTimer.current) clearTimeout(lockTimer.current); lockTimer.current = setTimeout(() => setLocked(false), 900); } }} animate={{ width: i === active ? 20 : 6, opacity: i === active ? 1 : 0.35 }} transition={{ type: "spring", stiffness: 300, damping: 30 }} className="h-1.5 rounded-full bg-white" aria-label={`Go to project ${i + 1}`} />
               ))}
             </div>
             <motion.button onClick={(e) => { e.stopPropagation(); navigate(1); }} disabled={active === total - 1} whileHover={active === total - 1 ? {} : { scale: 1.1 }} whileTap={active === total - 1 ? {} : { scale: 0.92 }} className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/30 text-white backdrop-blur-md transition-colors hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-25"><ChevronRight size={18} /></motion.button>
