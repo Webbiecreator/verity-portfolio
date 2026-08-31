@@ -29,10 +29,10 @@ export default function Dither({
   pixelSize = 2,
   disableAnimation = false,
 }: DitherProps) {
-  const duration = disableAnimation ? 0 : Math.max(12, 7 / Math.max(waveSpeed, 0.01));
-  const dotSize = Math.max(1, Math.min(3, pixelSize));
-  const spacing = Math.max(10, 8 + waveFrequency * 3);
-  const intensity = Math.max(0.12, Math.min(0.38, waveAmplitude * 0.55));
+  const duration = disableAnimation ? 0 : Math.max(10, 2.8 / Math.max(waveSpeed, 0.01));
+  const dotSize = Math.max(1, Math.min(2.5, pixelSize));
+  const spacing = Math.max(9, 7 + waveFrequency * 2.5);
+  const intensity = Math.max(0.22, Math.min(0.52, waveAmplitude * 0.95));
   const dots = rgb(waveColor);
   const background = rgb(backgroundColor);
 
@@ -43,12 +43,12 @@ export default function Dither({
         className="absolute -inset-[20%]"
         style={{
           backgroundColor: background,
-          backgroundImage: `radial-gradient(circle, ${dots} ${dotSize}px, transparent ${dotSize + 0.5}px)`,
+          backgroundImage: `radial-gradient(circle, ${dots} ${dotSize}px, transparent ${dotSize + 0.6}px)`,
           backgroundSize: `${spacing}px ${spacing}px`,
           opacity: intensity,
           filter: `contrast(${Math.max(1, colorNum / 2)})`,
         }}
-        animate={disableAnimation ? undefined : { backgroundPosition: ["0px 0px", `${spacing * 2}px ${spacing}px`] }}
+        animate={disableAnimation ? undefined : { backgroundPosition: ["0px 0px", `${spacing * 6}px ${spacing * 3}px`] }}
         transition={{ duration, repeat: Infinity, ease: "linear" }}
       />
 
@@ -57,19 +57,19 @@ export default function Dither({
         className="absolute -inset-[25%]"
         style={{
           background: `radial-gradient(ellipse at 30% 45%, ${dots} 0%, transparent 42%)`,
-          opacity: intensity * 0.75,
+          opacity: intensity * 0.9,
           mixBlendMode: "screen",
         }}
-        animate={disableAnimation ? undefined : { x: ["-8%", "12%", "-8%"], y: ["3%", "-4%", "3%"] }}
-        transition={{ duration: duration * 1.45, repeat: Infinity, ease: "easeInOut" }}
+        animate={disableAnimation ? undefined : { x: ["-10%", "14%", "-10%"], y: ["4%", "-5%", "4%"] }}
+        transition={{ duration: duration * 1.35, repeat: Infinity, ease: "easeInOut" }}
       />
 
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
-          background: "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.28) 50%, transparent 100%)",
-          opacity: 0.8,
+          background: "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.2) 50%, transparent 100%)",
+          opacity: 0.7,
         }}
       />
     </div>
