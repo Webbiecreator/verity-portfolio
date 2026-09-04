@@ -4,11 +4,11 @@ import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import AboutMe from "@/components/sections/about/about-me";
 import ShowReel from "@/components/sections/showreel";
-import GalaxyButton from "@/components/ui/galaxy-button";
 
 /**
  * Opening narrative: Hero → ShowReel → positioning statement.
- * The three chapters now each occupy roughly one viewport of scroll distance.
+ * The transition into the About section is scroll-driven; there is no
+ * separate Continue button competing with the hero CTAs at browser zoom.
  */
 export default function OpeningScrollytelling() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -34,16 +34,6 @@ export default function OpeningScrollytelling() {
   const chapterY = useTransform(progress, [0.64, 0.99], [45, 0]);
   const chapterScale = useTransform(progress, [0.64, 0.99], [0.96, 1]);
 
-  const advanceToStory = () => {
-    const aboutSection = document.getElementById("about");
-    if (!aboutSection) return;
-
-    aboutSection.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  };
-
   return (
     <div ref={sectionRef} className="relative h-[300vh] w-full bg-black">
       <div className="sticky top-0 h-dvh w-full overflow-hidden bg-black">
@@ -67,7 +57,7 @@ export default function OpeningScrollytelling() {
           style={{ opacity: chapterOpacity, y: chapterY, scale: chapterScale }}
           className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6"
         >
-          <div className="pointer-events-auto text-center">
+          <div className="text-center">
             <p className="mb-5 font-mono text-[9px] tracking-[0.45em] text-white/35 uppercase md:text-[10px]">
               Chapter 01 / What we make
             </p>
@@ -82,10 +72,6 @@ export default function OpeningScrollytelling() {
               Designed to look sharp, built to move, and made to give people a
               reason to remember you.
             </p>
-
-            <div className="mt-8 flex justify-center">
-              <GalaxyButton onClick={advanceToStory}>Continue</GalaxyButton>
-            </div>
           </div>
         </motion.div>
       </div>
