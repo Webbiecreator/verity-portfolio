@@ -13,7 +13,7 @@ export default function DeepButton({ href, children, secondary = false }: DeepBu
   return (
     <Link
       href={href}
-      className={`group relative inline-flex items-center justify-center overflow-hidden rounded-full border px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] transition-all duration-500 ${
+      className={`group relative inline-flex min-h-11 w-full shrink-0 items-center justify-center overflow-hidden rounded-full border px-5 py-3 text-center text-[10px] font-semibold uppercase tracking-[0.18em] whitespace-nowrap transition-all duration-500 sm:w-auto sm:min-w-36 sm:px-6 sm:tracking-[0.22em] ${
         secondary
           ? "border-white/10 bg-white/[0.03] text-white/55 hover:border-white/20 hover:text-white"
           : "border-white/20 bg-white text-black hover:bg-white/90"
