@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Dither from "@/components/ui/dither";
 
@@ -59,8 +60,56 @@ function ProjectVisual({ kind }: { kind: string }) {
 }
 
 export function TimelineDemo() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const projectRefs = useRef<(HTMLElement | null)[]>([]);
+  const activeProjectRef = useRef(0);
+  const wheelLockedRef = useRef(false);
+  const [activeProject, setActiveProject] = useState(0);
+
+  // Project gate: one wheel gesture advances exactly one project. This stops
+  // trackpad/mouse-wheel momentum from flying through the entire portfolio.
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const handleWheel = (event: WheelEvent) => {
+      const rect = section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const sectionIsActive = rect.top <= 8 && rect.bottom > viewportHeight * 0.35;
+
+      if (!sectionIsActive || Math.abs(event.deltaY) < 8 || wheelLockedRef.current) return;
+
+      const direction = event.deltaY > 0 ? 1 : -1;
+      const current = activeProjectRef.current;
+      const next = current + direction;
+
+      // At either edge, release the page so the user can enter/leave the section.
+      if (next < 0 || next >= projects.length) return;
+
+      event.preventDefault();
+      wheelLockedRef.current = true;
+      activeProjectRef.current = next;
+      setActiveProject(next);
+
+      projectRefs.current[next]?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+
+      window.setTimeout(() => {
+        wheelLockedRef.current = false;
+      }, 750);
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, []);
+
   return (
-    <section className="relative w-full overflow-hidden bg-black px-5 py-28 text-white sm:px-8 lg:px-12 lg:py-40">
+    <section
+      ref={sectionRef}
+      className="relative w-full overflow-hidden bg-black px-5 py-28 text-white sm:px-8 lg:px-12 lg:py-40"
+    >
       <div className="pointer-events-none absolute inset-0 opacity-35">
         <Dither
           waveSpeed={0.035}
@@ -75,7 +124,7 @@ export function TimelineDemo() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-[1400px]">
-        <div className="mb-24 flex flex-col gap-8 lg:mb-36 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mb-16 flex flex-col gap-8 lg:mb-20 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="mb-5 font-mono text-[9px] tracking-[0.45em] text-white/35 uppercase">
               Chapter 03 / Selected work
@@ -91,15 +140,18 @@ export function TimelineDemo() {
           </p>
         </div>
 
-        <div className="space-y-32 lg:space-y-48">
-          {projects.map((project) => (
+        <div className="space-y-0">
+          {projects.map((project, index) => (
             <motion.article
               key={project.number}
+              ref={(node) => {
+                projectRefs.current[index] = node;
+              }}
               initial={{ opacity: 0, y: 45 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-12%" }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className="grid gap-8 lg:grid-cols-[0.28fr_0.72fr] lg:items-start"
+              className="flex min-h-[100svh] scroll-mt-0 flex-col justify-center gap-8 py-10 lg:grid lg:grid-cols-[0.28fr_0.72fr] lg:items-center lg:gap-8 lg:py-16"
             >
               <div className="flex items-center gap-4 lg:sticky lg:top-24 lg:block">
                 <span className="font-mono text-xs tracking-[0.25em] text-white/25">{project.number}</span>
@@ -111,10 +163,10 @@ export function TimelineDemo() {
 
               <div>
                 <ProjectVisual kind={project.visual} />
-                <div className="mt-8 grid gap-7 md:grid-cols-[1fr_auto] md:items-end">
+                <div className="mt-6 grid gap-5 md:grid-cols-[1fr_auto] md:items-end">
                   <div>
                     <h3 className="text-4xl font-medium tracking-[-0.045em] sm:text-5xl">{project.title}</h3>
-                    <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/40 sm:text-base">
+                    <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/40 sm:text-base">
                       {project.description}
                     </p>
                   </div>
@@ -131,9 +183,9 @@ export function TimelineDemo() {
           ))}
         </div>
 
-        <div className="mt-32 border-t border-white/[0.08] pt-8 lg:mt-48">
+        <div className="mt-20 border-t border-white/[0.08] pt-8 lg:mt-24">
           <p className="font-mono text-[9px] tracking-[0.35em] text-white/25 uppercase">
-            More work is being built.
+            {activeProject === projects.length - 1 ? "More work is being built." : `Project ${String(activeProject + 1).padStart(2, "0")} / ${String(projects.length).padStart(2, "0")}`}
           </p>
         </div>
       </div>
