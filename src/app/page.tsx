@@ -7,9 +7,9 @@ import { TimelineDemo } from "@/components/sections/home/timeline-demo";
 import Preloader from "@/components/common/preloader";
 import OpeningScrollytelling from "@/components/sections/home/opening-scrollytelling";
 import CollabSec from "@/components/sections/home/collab-section";
-import BuildingLightsSection from "@/components/sections/about/building-lights-section";
-import CalBooking from "@/components/sections/home/cal-booking";
 import ProjectDetail from "@/components/sections/home/project-detail";
+import WireframeAbout from "@/components/sections/about/wireframe-about";
+import WireframeContact from "@/components/sections/contact/wireframe-contact";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,19 +28,12 @@ export default function Home() {
 
       <OpeningScrollytelling />
 
-      <section id="about" className="w-full">
-        <BuildingLightsSection />
-      </section>
-
       <TimelineDemo />
       <ProjectDetail />
+      <WireframeAbout />
       <CollabSec />
-
       <Testimonials />
-
-      <section id="contact" className="w-full scroll-mt-24">
-        <CalBooking />
-      </section>
+      <WireframeContact />
     </div>
   );
 }
