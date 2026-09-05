@@ -4,7 +4,6 @@ import "./globals.css";
 import { BASE_URL, OG_IMAGE } from "@/lib/constants";
 import LenisWrapper from "@/providers/lenis-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
-import FooterSection from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
 import StructuredData from "@/components/common/structured-data";
 import Analytics from "@/components/common/analytics";
@@ -28,27 +27,26 @@ const cormorantGaramond = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Your Name - Professional Portfolio & Digital Services",
-    template: "%s | Your Name",
+    default: "Verity — Digital Experiences",
+    template: "%s | Verity",
   },
   description:
-    "Professional portfolio showcasing web development, design, and digital solutions. Expert in modern web technologies, creative design, and innovative digital experiences.",
+    "Verity creates distinctive digital experiences through design, motion, and modern frontend development.",
   keywords: [
-    "Web Development",
-    "Portfolio",
-    "Digital Services",
+    "Verity",
     "Web Design",
-    "UI/UX Design",
     "Frontend Development",
+    "Creative Development",
+    "UI/UX Design",
+    "Motion Design",
     "Next.js",
     "React",
     "TypeScript",
-    "Full Stack Developer",
-    "Creative Solutions",
+    "Digital Experiences",
   ],
-  authors: [{ name: "Your Name" }],
-  creator: "Your Name",
-  publisher: "Your Name",
+  authors: [{ name: "Verity" }],
+  creator: "Verity",
+  publisher: "Verity",
   formatDetection: {
     email: false,
     address: false,
@@ -58,32 +56,31 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: BASE_URL,
-    title: "Your Name - Professional Portfolio & Digital Services",
+    title: "Verity — Digital Experiences",
     description:
-      "Explore a portfolio featuring cutting-edge web development projects, creative designs, and innovative digital solutions.",
-    siteName: "Your Name",
+      "Distinctive digital experiences built through design, motion, and modern frontend development.",
+    siteName: "Verity",
     images: [
       {
         url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "Portfolio preview",
-        type: "image/jpeg",
+        alt: "Verity portfolio preview",
+        type: "image/png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Your Name - Professional Portfolio & Digital Services",
+    title: "Verity — Digital Experiences",
     description:
-      "Explore a portfolio featuring cutting-edge web development projects, creative designs, and innovative digital solutions.",
-    creator: "@yourhandle",
+      "Distinctive digital experiences built through design, motion, and modern frontend development.",
     images: [
       {
         url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "Portfolio preview",
+        alt: "Verity portfolio preview",
       },
     ],
   },
@@ -109,8 +106,6 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
   verification: {
     google: "your-google-verification-code",
-    // yandex: "your-yandex-verification-code",
-    // bing: "your-bing-verification-code",
   },
   alternates: {
     canonical: BASE_URL,
@@ -123,38 +118,22 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // suppressHydrationWarning: next-themes adds the `class="dark"` +
-  // `color-scheme` style to <html> on the client, which the server can't know
-  // about — this tells React to ignore that expected attribute mismatch.
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/*
-          The hero video (/hv.webm) is eagerly buffered by its own
-          <video preload="auto" fetchpriority="high"> in AboutMe. We intentionally
-          do NOT use <link rel="preload" as="video"> — browsers reject "video" as
-          an unsupported `as` value, which is what triggered the console warning.
-        */}
-
-        {/* Warm up Vimeo connections early so ShowReel iframes load faster */}
         <link rel="preconnect" href="https://player.vimeo.com" />
         <link rel="preconnect" href="https://i.vimeocdn.com" />
         <link rel="preconnect" href="https://f.vimeocdn.com" />
-
-        {/* ImageKit serves the 47 AboutScrollSection frames (crossOrigin) */}
         <link
           rel="preconnect"
           href="https://ik.imagekit.io"
           crossOrigin="anonymous"
         />
         <link rel="dns-prefetch" href="https://ik.imagekit.io" />
-
         <StructuredData />
         <Analytics />
       </head>
-      <body
-        className={`${poppins.variable} ${cormorantGaramond.variable} antialiased  mx-auto `}
-      >
+      <body className={`${poppins.variable} ${cormorantGaramond.variable} antialiased mx-auto`}>
         <CustomCursor />
         <ConsoleLog />
         <ThemeProvider
@@ -166,8 +145,6 @@ export default function RootLayout({
           <LenisWrapper>
             <Navbar />
             {children}
-            <FooterSection />
-            {/* <FloatingDockDemo /> */}
           </LenisWrapper>
         </ThemeProvider>
       </body>
