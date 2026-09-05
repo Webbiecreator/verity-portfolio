@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import Testimonials from "@/components/sections/home/testimonials";
 import { TimelineDemo } from "@/components/sections/home/timeline-demo";
 import Preloader from "@/components/common/preloader";
 import OpeningScrollytelling from "@/components/sections/home/opening-scrollytelling";
-import CollabSec from "@/components/sections/home/collab-section";
 import ProjectDetail from "@/components/sections/home/project-detail";
 import WireframeAbout from "@/components/sections/about/wireframe-about";
 import WireframeContact from "@/components/sections/contact/wireframe-contact";
@@ -27,12 +25,9 @@ export default function Home() {
       </AnimatePresence>
 
       <OpeningScrollytelling />
-
       <TimelineDemo />
       <ProjectDetail />
       <WireframeAbout />
-      <CollabSec />
-      <Testimonials />
       <WireframeContact />
     </div>
   );
