@@ -5,8 +5,6 @@ import { motion } from "framer-motion";
 
 const links = [
   ["GitHub", "https://github.com/Webbiecreator"],
-  ["LinkedIn", "#"],
-  ["Instagram", "#"],
 ];
 
 export default function WireframeContact() {
@@ -57,7 +55,6 @@ export default function WireframeContact() {
             <br />
             remembering.
           </motion.h2>
-          <p className="mt-4 font-mono text-[9px] tracking-[0.2em] text-[#5a5a54] uppercase">Headline hover — opacity shift</p>
         </div>
 
         <div className="grid grid-cols-1 gap-16 md:grid-cols-2 md:gap-24">
@@ -66,17 +63,17 @@ export default function WireframeContact() {
 
             <label className="block">
               <span className="mb-2 block font-mono text-[10px] tracking-widest text-[#5a5a54] uppercase">Your name</span>
-              <input name="name" type="text" placeholder="Your name" className="w-full border border-[#b8b7ae] bg-transparent px-4 py-3 font-display text-base font-light italic outline-none transition-colors placeholder:text-[#b8b7ae] focus:border-[#0d0d0b]" />
+              <input required name="name" type="text" placeholder="Your name" className="w-full border border-[#b8b7ae] bg-transparent px-4 py-3 font-display text-base font-light italic outline-none transition-colors placeholder:text-[#b8b7ae] focus:border-[#0d0d0b]" />
             </label>
 
             <label className="block">
               <span className="mb-2 block font-mono text-[10px] tracking-widest text-[#5a5a54] uppercase">Email address</span>
-              <input name="email" type="email" placeholder="you@example.com" className="w-full border border-[#b8b7ae] bg-transparent px-4 py-3 font-display text-base font-light italic outline-none transition-colors placeholder:text-[#b8b7ae] focus:border-[#0d0d0b]" />
+              <input required name="email" type="email" placeholder="you@example.com" className="w-full border border-[#b8b7ae] bg-transparent px-4 py-3 font-display text-base font-light italic outline-none transition-colors placeholder:text-[#b8b7ae] focus:border-[#0d0d0b]" />
             </label>
 
             <label className="block">
               <span className="mb-2 block font-mono text-[10px] tracking-widest text-[#5a5a54] uppercase">Tell me about your project</span>
-              <textarea name="project" rows={6} placeholder="What are you building, and why does it matter?" className="w-full resize-none border border-[#b8b7ae] bg-transparent px-4 py-3 font-display text-base font-light italic outline-none transition-colors placeholder:text-[#b8b7ae] focus:border-[#0d0d0b]" />
+              <textarea required name="project" rows={6} placeholder="What are you building, and why does it matter?" className="w-full resize-none border border-[#b8b7ae] bg-transparent px-4 py-3 font-display text-base font-light italic outline-none transition-colors placeholder:text-[#b8b7ae] focus:border-[#0d0d0b]" />
             </label>
 
             <button type="submit" className="group flex w-full items-center justify-between border border-[#0d0d0b] bg-[#0d0d0b] px-6 py-4 text-[#f0efe9] transition-transform hover:-translate-y-0.5">
@@ -98,7 +95,7 @@ export default function WireframeContact() {
                 <p className="mb-4 font-mono text-[10px] tracking-[0.2em] text-[#5a5a54] uppercase">Elsewhere</p>
                 <div>
                   {links.map(([label, href]) => (
-                    <a key={label} href={href} className="group flex items-center gap-3 border-b border-[#b8b7ae] py-3 font-mono text-[11px] tracking-[0.08em] uppercase">
+                    <a key={label} href={href} target="_blank" rel="noreferrer" className="group flex items-center gap-3 border-b border-[#b8b7ae] py-3 font-mono text-[11px] tracking-[0.08em] uppercase">
                       <span className="opacity-70 transition-opacity group-hover:opacity-100">{label}</span>
                       <span className="ml-auto opacity-0 transition-opacity group-hover:opacity-100">↗</span>
                     </a>
@@ -110,7 +107,7 @@ export default function WireframeContact() {
             <footer className="mt-16 border-t border-[#b8b7ae] pt-8">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <span className="font-display text-xl font-black tracking-tight">Verity</span>
-                <span className="font-mono text-[9px] tracking-widest text-[#5a5a54] uppercase">© {new Date().getFullYear()} — All work is the property of the studio</span>
+                <span className="font-mono text-[9px] tracking-widest text-[#5a5a54] uppercase">© {new Date().getFullYear()} — Crafted on the web</span>
               </div>
             </footer>
           </div>
