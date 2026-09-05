@@ -97,9 +97,9 @@ export default function WireframeAbout() {
 
         <div className="mt-16 grid grid-cols-1 border border-white/15 sm:grid-cols-3">
           {[
-            ["8+", "Years in practice"],
-            ["40+", "Projects shipped"],
-            ["3", "Design awards"],
+            ["01", "Design → code"],
+            ["02", "Motion → interaction"],
+            ["03", "Prototype → ship"],
           ].map(([num, label]) => (
             <div key={label} className="border-b border-white/15 px-6 py-6 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
               <div className="font-display text-5xl font-black leading-none">{num}</div>
