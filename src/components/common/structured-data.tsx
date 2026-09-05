@@ -1,74 +1,40 @@
 import { BASE_URL, OG_IMAGE } from "@/lib/constants";
 
 export default function StructuredData() {
-  const structuredData = {
+  const personStructuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Your Name",
+    name: "Verity",
     url: BASE_URL,
     image: OG_IMAGE,
     description:
-      "Professional web developer and designer specializing in modern web technologies and creative digital solutions.",
-    jobTitle: "Web Developer & Designer",
-    sameAs: [
-      // Add your social media profiles
-      "https://github.com/yourusername",
-      "https://linkedin.com/in/yourusername",
-      "https://twitter.com/yourhandle",
-    ],
+      "Designer and developer creating distinctive digital experiences through interface design, motion, and modern frontend development.",
+    jobTitle: "Designer & Developer",
     knowsAbout: [
-      "Web Development",
+      "Interface Design",
+      "Motion Design",
+      "Interaction Design",
+      "Design Systems",
       "Frontend Development",
-      "Next.js",
       "React",
+      "Next.js",
       "TypeScript",
-      "UI/UX Design",
-      "Full Stack Development",
+      "Three.js",
+      "WebGL",
+      "Typography",
     ],
   };
 
   const websiteStructuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Your Name Portfolio",
+    name: "Verity — Digital Experiences",
     url: BASE_URL,
     description:
-      "Professional portfolio showcasing web development, design, and digital solutions.",
+      "Verity creates distinctive digital experiences through design, motion, and modern frontend development.",
     author: {
       "@type": "Person",
-      name: "Your Name",
-    },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${BASE_URL}/search?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
-  };
-
-  const organizationStructuredData = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    name: "Your Name",
-    image: `${BASE_URL}/md-red-logo.svg`,
-    "@id": BASE_URL,
-    url: BASE_URL,
-    telephone: "",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "",
-      addressLocality: "",
-      postalCode: "",
-      addressCountry: "",
-    },
-    priceRange: "$$",
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "09:00",
-      closes: "18:00",
+      name: "Verity",
     },
   };
 
@@ -76,19 +42,11 @@ export default function StructuredData() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personStructuredData) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(websiteStructuredData),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationStructuredData),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteStructuredData) }}
       />
     </>
   );
