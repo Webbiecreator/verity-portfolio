@@ -1,13 +1,14 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
 import DeepButton from "@/components/ui/deep-button";
 import CRTWarp from "@/components/ui/crt-warp";
 import Dither from "@/components/ui/dither";
 
 const AboutMe = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [tick, setTick] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -18,14 +19,23 @@ const AboutMe = () => {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const gridY = useTransform(scrollYProgress, [0, 1], [0, 120]);
 
+  useEffect(() => {
+    const interval = window.setInterval(() => setTick((value) => value + 1), 1200);
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section
       ref={containerRef}
       className="relative min-h-[100svh] w-full overflow-hidden bg-[#10061a] text-white"
     >
-      {/* Ambient background */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.28] mix-blend-screen">
+      {/* Cinematic background */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <div className="absolute inset-0 opacity-[0.23] mix-blend-screen">
           <Dither
             waveSpeed={0.025}
             waveFrequency={3}
@@ -67,8 +77,6 @@ const AboutMe = () => {
           className="hero-grid absolute -inset-x-1/2 bottom-[-28%] h-[82%] origin-bottom [transform:perspective(900px)_rotateX(58deg)_scale(1.45)] opacity-25"
         />
 
-        <div className="absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-[#10061a]/75 via-[#10061a]/15 to-transparent" />
-
         <motion.div
           animate={{ x: [0, 100, -40, 0], y: [0, -35, 45, 0], scale: [1, 1.15, 0.95, 1] }}
           transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
@@ -81,82 +89,136 @@ const AboutMe = () => {
           className="absolute right-[-8%] top-[26%] h-[30rem] w-[30rem] rounded-full bg-sky-300/[0.07] blur-[140px]"
         />
 
-        <div className="absolute left-1/2 top-[48%] h-[44rem] w-[44rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.045] bg-white/[0.015] blur-3xl" />
+        {/* Wireframe-inspired orbital rings */}
+        <div className="absolute left-1/2 top-1/2 h-[min(72vw,680px)] w-[min(72vw,680px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.055]" />
+        <div className="absolute left-1/2 top-1/2 h-[min(51vw,480px)] w-[min(51vw,480px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.045]" />
+        <div className="absolute left-1/2 top-1/2 h-[min(30vw,280px)] w-[min(30vw,280px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.035]" />
+
+        <span
+          className="absolute left-1/2 top-1/2 h-2 w-2 rounded-full bg-violet-200/45 shadow-[0_0_18px_rgba(196,181,253,0.55)]"
+          style={{ transform: `rotate(${tick * 30}deg) translateX(min(25vw,240px))` }}
+        />
+        <span
+          className="absolute left-1/2 top-1/2 h-1.5 w-1.5 rounded-full bg-sky-100/30"
+          style={{ transform: `rotate(${-tick * 18}deg) translateX(min(35vw,340px))` }}
+        />
+
+        <div className="absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-[#10061a]/75 via-[#10061a]/15 to-transparent" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(16,6,26,0.42)_78%)]" />
       </div>
 
       <div className="pointer-events-none absolute inset-0 z-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.025]" />
 
-      {/* Hero — no scale transform: the layout itself stays stable at 100% zoom */}
       <motion.div
         style={{ y: heroY, opacity: heroOpacity }}
-        className="relative z-20 mx-auto flex min-h-[100svh] w-full max-w-[1500px] flex-col px-6 pb-7 pt-24 sm:px-8 sm:pb-8 sm:pt-28 md:px-10 md:pb-10 md:pt-30"
+        className="relative z-20 mx-auto flex min-h-[100svh] w-full max-w-[1500px] flex-col px-6 pb-7 pt-8 sm:px-8 sm:pb-8 md:px-10"
       >
-        <div className="flex shrink-0 items-center justify-between">
-          <div className="flex items-center gap-3 text-[9px] uppercase tracking-[0.22em] text-white/60 sm:text-[10px] sm:tracking-[0.28em] md:text-xs">
-            <motion.span
-              animate={{ opacity: [0.4, 1, 0.4], scale: [0.9, 1.25, 0.9] }}
-              transition={{ duration: 2.5, repeat: Infinity }}
-              className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-200 shadow-[0_0_18px_rgba(196,181,253,0.8)]"
-            />
-            Independent digital studio
-          </div>
-
-          <div className="hidden text-[10px] uppercase tracking-[0.28em] text-white/45 sm:block md:text-xs">
-            India · Worldwide
-          </div>
-        </div>
-
-        <div className="flex min-h-0 flex-1 items-center justify-center py-6 sm:py-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30, filter: "blur(12px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="flex w-full max-w-7xl flex-col items-center text-center"
+        {/* Wireframe nav */}
+        <nav className="flex items-center justify-between border-b border-white/[0.09] pb-4 sm:pb-5" aria-label="Primary navigation">
+          <button
+            type="button"
+            onClick={() => scrollTo("hero")}
+            className="group flex items-center gap-3 text-left"
+            aria-label="Back to top"
           >
-            <motion.p
-              initial={{ opacity: 0, letterSpacing: "0.8em" }}
-              animate={{ opacity: 1, letterSpacing: "0.32em" }}
-              transition={{ delay: 0.25, duration: 1.2 }}
-              className="font-ledlight mb-5 text-[10px] uppercase text-violet-100/75 sm:mb-6 sm:text-xs md:mb-7 md:text-sm"
+            <span className="font-ledlight text-lg uppercase tracking-[0.18em] text-white sm:text-xl">VERITY</span>
+            <span className="hidden font-mono text-[9px] uppercase tracking-[0.16em] text-white/30 sm:block">/ studio</span>
+          </button>
+
+          <div className="flex items-center gap-5 sm:gap-8">
+            {["projects", "about", "contact"].map((id) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => scrollTo(id)}
+                className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/55 transition-colors hover:text-white sm:text-[10px]"
+              >
+                {id}
+              </button>
+            ))}
+          </div>
+        </nav>
+
+        {/* Hero body */}
+        <div className="flex min-h-0 flex-1 items-center py-8 sm:py-10 md:py-12">
+          <div className="w-full max-w-[1180px]">
+            <div className="mb-5 flex flex-wrap items-center gap-3 sm:mb-6">
+              <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/45 sm:text-[10px]">
+                Available for work
+              </span>
+              <span className="h-1.5 w-1.5 rounded-full bg-violet-200/65 shadow-[0_0_12px_rgba(196,181,253,0.65)]" />
+              <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/35 sm:text-[10px]">
+                India / Worldwide
+              </span>
+            </div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 28, filter: "blur(12px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              className="font-roadster w-full text-[clamp(4rem,10.4vw,10.5rem)] font-medium uppercase leading-[0.76] tracking-[-0.06em]"
             >
-              VERITY
-            </motion.p>
-
-            {/* Fluid typography prevents the statement from becoming taller than the viewport. */}
-            <h1 className="font-roadster w-full text-[clamp(3.4rem,7.2vw,8.5rem)] font-medium uppercase leading-[0.78] tracking-[-0.055em] drop-shadow-[0_12px_50px_rgba(0,0,0,0.3)]">
               <span className="block">We build</span>
-              <span className="block bg-gradient-to-r from-white via-white to-white/45 bg-clip-text text-transparent">websites</span>
-              <span className="mt-1 block text-[0.56em] leading-[0.95] text-white/55 sm:mt-2">that don't feel like</span>
-              <span className="block bg-gradient-to-r from-violet-100 via-white to-white/40 bg-clip-text text-transparent">websites.</span>
-            </h1>
+              <span className="block bg-gradient-to-r from-white via-white to-white/45 bg-clip-text text-transparent">websites.</span>
+              <span className="mt-3 block pl-[0.08em] text-[0.42em] font-normal lowercase leading-[1.05] tracking-[-0.02em] text-white/45 sm:mt-4">
+                that don&apos;t feel like
+              </span>
+              <span className="block bg-gradient-to-r from-violet-100 via-white to-white/40 bg-clip-text text-transparent">
+                websites.
+              </span>
+            </motion.h1>
 
-            <div className="mt-6 flex w-full max-w-2xl flex-col items-center gap-5 sm:mt-7 sm:gap-6 md:mt-9 md:gap-7">
-              <p className="max-w-xl px-2 text-xs leading-6 text-white/60 sm:text-sm sm:leading-7 md:text-base">
-                High-quality digital experiences built with sharp design, smooth interactions, and attention to every detail.
-              </p>
+            <div className="mt-7 flex flex-col gap-6 sm:mt-8 md:flex-row md:items-start md:gap-12">
+              <div className="max-w-xl">
+                <span className="mb-2 inline-flex border border-white/15 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.14em] text-white/35">
+                  ↗ typewriter — animated
+                </span>
+                <p className="font-mono text-[10px] leading-5 tracking-wide text-white/50 sm:text-[11px] sm:leading-6">
+                  Creative web design &amp; development building digital experiences at the intersection of craft and technology.
+                  <span className="ml-0.5 inline-block h-3 w-px translate-y-0.5 animate-pulse bg-violet-200/65" aria-hidden />
+                </p>
+              </div>
 
-              <div className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
-                <DeepButton href="#projects">View work</DeepButton>
-                <DeepButton href="#contact" secondary>Start a project</DeepButton>
+              <div className="hidden shrink-0 flex-col gap-1 pt-1 md:flex">
+                <span className="font-mono text-[8px] uppercase tracking-[0.17em] text-white/25">Discipline</span>
+                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-white/40">— Interface Design</span>
+                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-white/40">— Frontend Dev</span>
+                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-white/40">— Motion</span>
               </div>
             </div>
-          </motion.div>
+
+            <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row">
+              <DeepButton href="#projects">View work</DeepButton>
+              <DeepButton href="#contact" secondary>
+                Start a project
+              </DeepButton>
+            </div>
+          </div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="flex shrink-0 items-end justify-between border-t border-white/[0.1] pt-4 sm:pt-5"
-        >
-          <div className="text-[8px] uppercase tracking-[0.18em] text-white/40 sm:text-[10px] sm:tracking-[0.24em] md:text-xs">
+        {/* Bottom status row / scroll cue */}
+        <div className="flex shrink-0 items-end justify-between border-t border-white/[0.1] pt-4 sm:pt-5">
+          <div className="font-mono text-[8px] uppercase tracking-[0.18em] text-white/35 sm:text-[9px] sm:tracking-[0.24em]">
             Design · Development · Digital
           </div>
-          <div className="text-right text-[8px] uppercase tracking-[0.18em] text-white/35 sm:text-[10px] sm:tracking-[0.24em] md:text-xs">
-            Scroll to explore
-          </div>
-        </motion.div>
+
+          <button
+            type="button"
+            onClick={() => scrollTo("projects")}
+            className="group flex items-center gap-3 text-right"
+            aria-label="Scroll to explore"
+          >
+            <span className="font-mono text-[8px] uppercase tracking-[0.18em] text-white/35 transition-colors group-hover:text-white/65 sm:text-[9px] sm:tracking-[0.24em]">
+              Scroll to explore
+            </span>
+            <span className="relative h-8 w-px overflow-hidden bg-white/15 sm:h-10">
+              <span
+                className="absolute left-0 top-0 w-full bg-violet-200/70"
+                style={{ height: `${((tick % 4) + 1) * 25}%`, transition: "height 1.1s ease-in-out" }}
+              />
+            </span>
+          </button>
+        </div>
       </motion.div>
     </section>
   );
