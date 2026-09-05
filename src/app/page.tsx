@@ -31,9 +31,7 @@ export default function Home() {
         <BuildingLightsSection />
       </section>
 
-      <section id="projects" className="w-full scroll-mt-24">
-        <TimelineDemo />
-      </section>
+      <TimelineDemo />
       <CollabSec />
 
       <Testimonials />
