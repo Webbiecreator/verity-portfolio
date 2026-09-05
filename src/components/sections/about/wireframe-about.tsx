@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 
 const capabilities = [
@@ -20,7 +21,7 @@ const processSteps = [
   ["04", "Refine", "Surgical iteration on what works, honest elimination of what doesn't."],
 ];
 
-function Label({ children }: { children: React.ReactNode }) {
+function Label({ children }: { children: ReactNode }) {
   return (
     <span className="inline-flex border border-white/15 bg-[#0d0d0b] px-2 py-1 font-mono text-[9px] tracking-[0.08em] text-[#f0efe9] uppercase">
       {children}
@@ -73,7 +74,7 @@ export default function WireframeAbout() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.035, duration: 0.45 }}
-                className="group border-b border-r border-white/15 px-4 py-4 font-mono text-[11px] tracking-[0.1em] text-[#f0efe9]/75 uppercase last:border-b-0 hover:bg-[#f0efe9] hover:text-[#0d0d0b] lg:nth-[4n]:border-r-0"
+                className="group border-b border-r border-white/15 px-4 py-4 font-mono text-[11px] tracking-[0.1em] text-[#f0efe9]/75 uppercase hover:bg-[#f0efe9] hover:text-[#0d0d0b]"
               >
                 {cap}
               </motion.div>
