@@ -33,7 +33,6 @@ const AboutMe = () => {
       ref={containerRef}
       className="relative min-h-[100svh] w-full overflow-hidden bg-[#10061a] text-white"
     >
-      {/* Cinematic background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
         <div className="absolute inset-0 opacity-[0.23] mix-blend-screen">
           <Dither
@@ -89,7 +88,6 @@ const AboutMe = () => {
           className="absolute right-[-8%] top-[26%] h-[30rem] w-[30rem] rounded-full bg-sky-300/[0.07] blur-[140px]"
         />
 
-        {/* Wireframe-inspired orbital rings */}
         <div className="absolute left-1/2 top-1/2 h-[min(72vw,680px)] w-[min(72vw,680px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.055]" />
         <div className="absolute left-1/2 top-1/2 h-[min(51vw,480px)] w-[min(51vw,480px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.045]" />
         <div className="absolute left-1/2 top-1/2 h-[min(30vw,280px)] w-[min(30vw,280px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.035]" />
@@ -111,45 +109,14 @@ const AboutMe = () => {
 
       <motion.div
         style={{ y: heroY, opacity: heroOpacity }}
-        className="relative z-20 mx-auto flex min-h-[100svh] w-full max-w-[1500px] flex-col px-6 pb-7 pt-8 sm:px-8 sm:pb-8 md:px-10"
+        className="relative z-20 mx-auto flex min-h-[100svh] w-full max-w-[1500px] flex-col px-6 pb-7 pt-24 sm:px-8 sm:pb-8 sm:pt-28 md:px-10"
       >
-        {/* Wireframe nav */}
-        <nav className="flex items-center justify-between border-b border-white/[0.09] pb-4 sm:pb-5" aria-label="Primary navigation">
-          <button
-            type="button"
-            onClick={() => scrollTo("hero")}
-            className="group flex items-center gap-3 text-left"
-            aria-label="Back to top"
-          >
-            <span className="font-ledlight text-lg uppercase tracking-[0.18em] text-white sm:text-xl">VERITY</span>
-            <span className="hidden font-mono text-[9px] uppercase tracking-[0.16em] text-white/30 sm:block">/ studio</span>
-          </button>
-
-          <div className="flex items-center gap-5 sm:gap-8">
-            {["projects", "about", "contact"].map((id) => (
-              <button
-                key={id}
-                type="button"
-                onClick={() => scrollTo(id)}
-                className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/55 transition-colors hover:text-white sm:text-[10px]"
-              >
-                {id}
-              </button>
-            ))}
-          </div>
-        </nav>
-
-        {/* Hero body */}
         <div className="flex min-h-0 flex-1 items-center py-8 sm:py-10 md:py-12">
           <div className="w-full max-w-[1180px]">
             <div className="mb-5 flex flex-wrap items-center gap-3 sm:mb-6">
-              <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/45 sm:text-[10px]">
-                Available for work
-              </span>
+              <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/45 sm:text-[10px]">Available for work</span>
               <span className="h-1.5 w-1.5 rounded-full bg-violet-200/65 shadow-[0_0_12px_rgba(196,181,253,0.65)]" />
-              <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/35 sm:text-[10px]">
-                India / Worldwide
-              </span>
+              <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/35 sm:text-[10px]">India / Worldwide</span>
             </div>
 
             <motion.h1
@@ -160,23 +127,14 @@ const AboutMe = () => {
             >
               <span className="block">We build</span>
               <span className="block bg-gradient-to-r from-white via-white to-white/45 bg-clip-text text-transparent">websites.</span>
-              <span className="mt-3 block pl-[0.08em] text-[0.42em] font-normal lowercase leading-[1.05] tracking-[-0.02em] text-white/45 sm:mt-4">
-                that don&apos;t feel like
-              </span>
-              <span className="block bg-gradient-to-r from-violet-100 via-white to-white/40 bg-clip-text text-transparent">
-                websites.
-              </span>
+              <span className="mt-3 block pl-[0.08em] text-[0.42em] font-normal lowercase leading-[1.05] tracking-[-0.02em] text-white/45 sm:mt-4">that don&apos;t feel like</span>
+              <span className="block bg-gradient-to-r from-violet-100 via-white to-white/40 bg-clip-text text-transparent">websites.</span>
             </motion.h1>
 
             <div className="mt-7 flex flex-col gap-6 sm:mt-8 md:flex-row md:items-start md:gap-12">
               <div className="max-w-xl">
-                <span className="mb-2 inline-flex border border-white/15 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.14em] text-white/35">
-                  ↗ typewriter — animated
-                </span>
-                <p className="font-mono text-[10px] leading-5 tracking-wide text-white/50 sm:text-[11px] sm:leading-6">
-                  Creative web design &amp; development building digital experiences at the intersection of craft and technology.
-                  <span className="ml-0.5 inline-block h-3 w-px translate-y-0.5 animate-pulse bg-violet-200/65" aria-hidden />
-                </p>
+                <span className="mb-2 inline-flex border border-white/15 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.14em] text-white/35">↗ typewriter — animated</span>
+                <p className="font-mono text-[10px] leading-5 tracking-wide text-white/50 sm:text-[11px] sm:leading-6">Creative web design &amp; development building digital experiences at the intersection of craft and technology.<span className="ml-0.5 inline-block h-3 w-px translate-y-0.5 animate-pulse bg-violet-200/65" aria-hidden /></p>
               </div>
 
               <div className="hidden shrink-0 flex-col gap-1 pt-1 md:flex">
@@ -189,33 +147,17 @@ const AboutMe = () => {
 
             <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row">
               <DeepButton href="#projects">View work</DeepButton>
-              <DeepButton href="#contact" secondary>
-                Start a project
-              </DeepButton>
+              <DeepButton href="#contact" secondary>Start a project</DeepButton>
             </div>
           </div>
         </div>
 
-        {/* Bottom status row / scroll cue */}
         <div className="flex shrink-0 items-end justify-between border-t border-white/[0.1] pt-4 sm:pt-5">
-          <div className="font-mono text-[8px] uppercase tracking-[0.18em] text-white/35 sm:text-[9px] sm:tracking-[0.24em]">
-            Design · Development · Digital
-          </div>
-
-          <button
-            type="button"
-            onClick={() => scrollTo("projects")}
-            className="group flex items-center gap-3 text-right"
-            aria-label="Scroll to explore"
-          >
-            <span className="font-mono text-[8px] uppercase tracking-[0.18em] text-white/35 transition-colors group-hover:text-white/65 sm:text-[9px] sm:tracking-[0.24em]">
-              Scroll to explore
-            </span>
+          <div className="font-mono text-[8px] uppercase tracking-[0.18em] text-white/35 sm:text-[9px] sm:tracking-[0.24em]">Design · Development · Digital</div>
+          <button type="button" onClick={() => scrollTo("projects")} className="group flex items-center gap-3 text-right" aria-label="Scroll to explore">
+            <span className="font-mono text-[8px] uppercase tracking-[0.18em] text-white/35 transition-colors group-hover:text-white/65 sm:text-[9px] sm:tracking-[0.24em]">Scroll to explore</span>
             <span className="relative h-8 w-px overflow-hidden bg-white/15 sm:h-10">
-              <span
-                className="absolute left-0 top-0 w-full bg-violet-200/70"
-                style={{ height: `${((tick % 4) + 1) * 25}%`, transition: "height 1.1s ease-in-out" }}
-              />
+              <span className="absolute left-0 top-0 w-full bg-violet-200/70" style={{ height: `${((tick % 4) + 1) * 25}%`, transition: "height 1.1s ease-in-out" }} />
             </span>
           </button>
         </div>
