@@ -56,7 +56,7 @@ export default function ProjectDetail() {
     <section id="project-detail" className="relative w-full overflow-hidden border-t border-white/[0.08] bg-[#070708] text-white">
       <div className="px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
         <div className="mb-14 flex flex-wrap items-center gap-3 sm:mb-20 sm:gap-5">
-          <span className="font-mono text-[8px] tracking-[0.32em] text-white/35 uppercase">Chapter 04 / Project detail</span>
+          <span className="font-mono text-[8px] tracking-[0.32em] text-white/35 uppercase">Chapter 03 / Project detail</span>
           <span className="font-mono text-[8px] tracking-[0.22em] text-white/20 uppercase">Meridian — Case study</span>
           <span className="border border-dashed border-white/20 px-1.5 py-0.5 font-mono text-[8px] tracking-[0.12em] text-white/25 uppercase">Deep link</span>
         </div>
@@ -127,7 +127,7 @@ export default function ProjectDetail() {
       {active && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-5 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Continue to About">
           <div className="w-full max-w-md border border-white/15 bg-[#0b0b0c] p-7 sm:p-9">
-            <div className="font-mono text-[8px] tracking-[0.25em] text-white/30 uppercase">Chapter 05</div>
+            <div className="font-mono text-[8px] tracking-[0.25em] text-white/30 uppercase">Chapter 04</div>
             <h3 className="mt-4 text-4xl font-medium tracking-[-0.05em]">About Verity</h3>
             <p className="mt-4 text-sm leading-relaxed text-white/45">The next chapter is ready. Continue into the studio, process and capabilities.</p>
             <div className="mt-7 flex gap-3">
