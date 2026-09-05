@@ -4,17 +4,26 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 
 const details = [
-  ["Client", "Meridian Media Group"],
+  ["Type", "Featured concept"],
   ["Scope", "Research · Design · Development"],
-  ["Duration", "14 weeks"],
-  ["Year", "2024"],
-  ["URL", "meridianreads.com ↗"],
+  ["Role", "Design + Frontend"],
+  ["Year", "2026"],
+  ["Status", "Case study placeholder"],
 ] as const;
 
 const narrative = [
-  { label: "01 — Context", body: "Meridian's editorial team had outgrown their CMS. Reader sessions were dropping as visual complexity increased. The content was world-class; the container wasn't." },
-  { label: "02 — Approach", body: "Typography became infrastructure. A visual rhythm system was built from the ground up — flexible enough for breaking news, long reads, and multimedia essays." },
-  { label: "03 — Outcome", body: "+38% average session depth. Reader retention increased by 22% in the first quarter post-launch. The editorial team now designs with the system, not against it." },
+  {
+    label: "01 — Context",
+    body: "A placeholder case-study shell for the portfolio. This space is reserved for a real project narrative once the final work and assets are selected.",
+  },
+  {
+    label: "02 — Approach",
+    body: "The structure is intentionally editorial: a clear visual, a compact metadata rail, and a story that can explain the decisions behind the work without turning the page into a wall of text.",
+  },
+  {
+    label: "03 — Outcome",
+    body: "Final outcomes, measurable results, and the live project link will replace this placeholder once the selected project is locked.",
+  },
 ] as const;
 
 function MediaPlaceholder({ label, className = "" }: { label: string; className?: string }) {
@@ -48,18 +57,18 @@ export default function ProjectDetail() {
       <div className="px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
         <div className="mb-14 flex flex-wrap items-center gap-3 sm:mb-20 sm:gap-5">
           <span className="font-mono text-[8px] tracking-[0.32em] text-white/35 uppercase">Interlude / Project detail</span>
-          <span className="font-mono text-[8px] tracking-[0.22em] text-white/20 uppercase">Meridian — Case study</span>
-          <span className="border border-dashed border-white/20 px-1.5 py-0.5 font-mono text-[8px] tracking-[0.12em] text-white/25 uppercase">Deep link</span>
+          <span className="font-mono text-[8px] tracking-[0.22em] text-white/20 uppercase">Featured concept</span>
+          <span className="border border-dashed border-white/20 px-1.5 py-0.5 font-mono text-[8px] tracking-[0.12em] text-white/25 uppercase">Placeholder</span>
         </div>
 
         <div ref={heroRef} className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_0.42fr] lg:gap-16">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : undefined} transition={{ duration: 0.7 }}>
-            <p className="mb-4 font-mono text-[8px] tracking-[0.28em] text-white/25 uppercase">01 — Meridian / 2024</p>
+            <p className="mb-4 font-mono text-[8px] tracking-[0.28em] text-white/25 uppercase">01 — Featured concept / 2026</p>
             <h2 className="max-w-4xl text-[clamp(4rem,10vw,9rem)] font-medium leading-[0.82] tracking-[-0.065em]">
-              Editorial<br /><span className="font-light italic text-white/35">Platform</span><br />Redesign
+              Editorial<br /><span className="font-light italic text-white/35">Platform</span><br />Concept
             </h2>
             <div className="relative mt-10 overflow-hidden sm:mt-14">
-              <motion.div style={{ y: imageY }} className="h-56 sm:h-72 lg:h-80"><MediaPlaceholder label="Hero image / parallax" className="h-full" /></motion.div>
+              <motion.div style={{ y: imageY }} className="h-56 sm:h-72 lg:h-80"><MediaPlaceholder label="Hero image / replace asset" className="h-full" /></motion.div>
             </div>
           </motion.div>
 
@@ -69,13 +78,13 @@ export default function ProjectDetail() {
                 {details.map(([key, value]) => <div key={key}><div className="font-mono text-[8px] tracking-[0.18em] text-white/25 uppercase">{key}</div><div className="mt-1 text-sm font-light text-white/75">{value}</div></div>)}
               </div>
             </div>
-            <p className="mt-3 font-mono text-[8px] tracking-[0.18em] text-white/20 uppercase">Metadata panel / sticky</p>
+            <p className="mt-3 font-mono text-[8px] tracking-[0.18em] text-white/20 uppercase">Metadata panel / ready for project data</p>
           </motion.aside>
         </div>
 
         <div className="relative mt-14 sm:mt-20 lg:mt-28">
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-[0.72fr_0.28fr] lg:items-end">
-            <motion.div initial={{ opacity: 0, y: 25 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.65 }} className="h-[380px] sm:h-[520px] lg:h-[620px]"><MediaPlaceholder label="Primary visual / desktop" className="h-full" /></motion.div>
+            <motion.div initial={{ opacity: 0, y: 25 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.65 }} className="h-[380px] sm:h-[520px] lg:h-[620px]"><MediaPlaceholder label="Primary visual / replace asset" className="h-full" /></motion.div>
             <motion.div initial={{ opacity: 0, y: 45 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.65, delay: 0.1 }} className="lg:-ml-24 lg:mb-12"><MediaPlaceholder label="Secondary / mobile" className="h-64 sm:h-72 lg:h-80" /></motion.div>
           </div>
         </div>
