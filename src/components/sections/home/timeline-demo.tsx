@@ -76,6 +76,7 @@ export function TimelineDemo() {
   }, []);
 
   const progress = ((activeProject + 1) / projects.length) * 100;
+  const openCaseStudy = () => document.getElementById("project-detail")?.scrollIntoView({ behavior: "smooth", block: "start" });
 
   return (
     <section ref={sectionRef} id="projects" className="relative w-full overflow-hidden bg-black text-white" style={{ height: `${projects.length * 100}svh` }}>
@@ -90,7 +91,7 @@ export function TimelineDemo() {
       <div className="sticky top-0 flex h-svh flex-col overflow-hidden">
         <div className="flex shrink-0 items-center justify-between border-b border-white/[0.08] px-5 py-4 sm:px-8 lg:px-12">
           <div className="flex items-center gap-3 sm:gap-5">
-            <p className="font-mono text-[8px] tracking-[0.38em] text-white/35 uppercase sm:text-[9px]">Chapter 03 / Selected work</p>
+            <p className="font-mono text-[8px] tracking-[0.38em] text-white/35 uppercase sm:text-[9px]">Chapter 02 / Selected work</p>
             <span className="font-mono text-[8px] tracking-[0.2em] text-white/25 sm:text-[9px]">{String(activeProject + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span>
           </div>
           <div className="hidden items-center gap-3 sm:flex">
@@ -109,7 +110,7 @@ export function TimelineDemo() {
               </div>
               <div className="mt-6 hidden lg:block">
                 <div className="mb-3 flex flex-wrap gap-2">{projects[activeProject].tags.map((tag) => <span key={tag} className="rounded-full border border-white/10 px-3 py-1.5 font-mono text-[8px] tracking-[0.16em] text-white/35 uppercase">{tag}</span>)}</div>
-                <button className="group flex w-full items-center justify-between border border-white/20 px-5 py-3 transition-colors hover:border-white/50"><span className="font-mono text-[9px] tracking-[0.2em] uppercase">View project</span><span className="transition-transform group-hover:translate-x-1">→</span></button>
+                <button type="button" onClick={openCaseStudy} className="group flex w-full items-center justify-between border border-white/20 px-5 py-3 transition-colors hover:border-white/50"><span className="font-mono text-[9px] tracking-[0.2em] uppercase">View case study</span><span className="transition-transform group-hover:translate-x-1">→</span></button>
               </div>
             </div>
 
