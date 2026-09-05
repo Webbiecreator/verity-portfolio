@@ -9,6 +9,7 @@ import OpeningScrollytelling from "@/components/sections/home/opening-scrollytel
 import CollabSec from "@/components/sections/home/collab-section";
 import BuildingLightsSection from "@/components/sections/about/building-lights-section";
 import CalBooking from "@/components/sections/home/cal-booking";
+import ProjectDetail from "@/components/sections/home/project-detail";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -32,6 +33,7 @@ export default function Home() {
       </section>
 
       <TimelineDemo />
+      <ProjectDetail />
       <CollabSec />
 
       <Testimonials />
