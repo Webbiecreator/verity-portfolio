@@ -104,9 +104,6 @@ export const metadata: Metadata = {
     apple: "/md-red-logo.svg",
   },
   manifest: "/manifest.webmanifest",
-  verification: {
-    google: "your-google-verification-code",
-  },
   alternates: {
     canonical: BASE_URL,
   },
